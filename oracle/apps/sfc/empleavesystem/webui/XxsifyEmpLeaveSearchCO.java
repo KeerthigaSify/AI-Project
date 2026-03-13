@@ -8,8 +8,10 @@ package oracle.apps.sfc.empleavesystem.webui;
 import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
+import oracle.apps.fnd.framework.webui.OAWebBeanConstants;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
 import oracle.apps.fnd.framework.OAApplicationModule;
+import java.io.Serializable;
 
 /**
  * Controller for the Employee Leave Search Page.
@@ -34,7 +36,7 @@ public class XxsifyEmpLeaveSearchCO extends OAControllerImpl {
         OAApplicationModule am = pageContext.getApplicationModule(webBean);
 
         // Identify the logged-in employee
-        String empId = pageContext.getEmployeeId();   // FND_GLOBAL.EMPLOYEE_ID
+        String empId = String.valueOf(pageContext.getEmployeeId());   // FND_GLOBAL.EMPLOYEE_ID
 
         if (empId == null || empId.trim().isEmpty()) {
             throw new OAException(
@@ -43,7 +45,7 @@ public class XxsifyEmpLeaveSearchCO extends OAControllerImpl {
         }
 
         // Initialise the search page – sets employee bind variable in the VO
-        am.invokeMethod("initSearchPage", new Object[]{ empId });
+        am.invokeMethod("initSearchPage", new Serializable[]{ empId });
     }
 
     // -----------------------------------------------------------------------
@@ -63,14 +65,14 @@ public class XxsifyEmpLeaveSearchCO extends OAControllerImpl {
             String endDate    = pageContext.getParameter("EndDate");
 
             am.invokeMethod("searchLeaves",
-                new Object[]{ leaveType, startDate, endDate });
+                new Serializable[]{ leaveType, startDate, endDate });
 
         } else if ("Clear".equals(event)) {
             am.invokeMethod("clearSearch");
 
         } else if ("Create".equals(event)) {
             // Navigate to Create Page (new record mode)
-            String empId = pageContext.getEmployeeId();
+            String empId = String.valueOf(pageContext.getEmployeeId());
             pageContext.forwardImmediately(
                 "OA.jsp?page=" + CREATE_PAGE + "&empId=" + empId,
                 null,
@@ -83,7 +85,7 @@ public class XxsifyEmpLeaveSearchCO extends OAControllerImpl {
         } else if ("Update".equals(event)) {
             // Navigate to Create Page (update mode) – leaveId passed as URL param
             String leaveId = pageContext.getParameter("leaveId");
-            String empId   = pageContext.getEmployeeId();
+            String empId   = String.valueOf(pageContext.getEmployeeId());
 
             pageContext.forwardImmediately(
                 "OA.jsp?page=" + CREATE_PAGE

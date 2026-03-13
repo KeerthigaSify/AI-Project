@@ -11,6 +11,7 @@ import oracle.jbo.domain.Number;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 /**
  * Application Module for the Sify Employee Leave System.
@@ -32,7 +33,7 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
     public void initSearchPage(String empId) {
         XxsifyEmpLeaveSearchVOImpl searchVO = getXxsifyEmpLeaveSearchVO();
         if (empId != null && !empId.trim().equals("")) {
-            searchVO.setBindVariableValue("p_employee_id", new Number(empId));
+            searchVO.setNamedWhereClauseParam("p_employee_id", new Number(empId));
         }
         searchVO.setWhereClause(null);
         searchVO.setWhereClauseParams(null);
@@ -45,9 +46,9 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
     public void searchLeaves(String leaveType, String startDate, String endDate) {
         XxsifyEmpLeaveSearchVOImpl searchVO = getXxsifyEmpLeaveSearchVO();
 
-        searchVO.setBindVariableValue("p_leave_type",  (leaveType  != null && !leaveType.isEmpty())  ? leaveType  : null);
-        searchVO.setBindVariableValue("p_start_date",  (startDate  != null && !startDate.isEmpty())  ? Date.valueOf(startDate)  : null);
-        searchVO.setBindVariableValue("p_end_date",    (endDate    != null && !endDate.isEmpty())    ? Date.valueOf(endDate)    : null);
+        searchVO.setNamedWhereClauseParam("p_leave_type",  (leaveType  != null && !leaveType.isEmpty())  ? leaveType  : null);
+        searchVO.setNamedWhereClauseParam("p_start_date",  (startDate  != null && !startDate.isEmpty())  ? toOAFDate(startDate)  : null);
+        searchVO.setNamedWhereClauseParam("p_end_date",    (endDate    != null && !endDate.isEmpty())    ? toOAFDate(endDate)    : null);
 
         searchVO.executeQuery();
     }
@@ -57,9 +58,9 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
     // -----------------------------------------------------------------------
     public void clearSearch() {
         XxsifyEmpLeaveSearchVOImpl searchVO = getXxsifyEmpLeaveSearchVO();
-        searchVO.setBindVariableValue("p_leave_type", null);
-        searchVO.setBindVariableValue("p_start_date", null);
-        searchVO.setBindVariableValue("p_end_date",   null);
+        searchVO.setNamedWhereClauseParam("p_leave_type", null);
+        searchVO.setNamedWhereClauseParam("p_start_date", null);
+        searchVO.setNamedWhereClauseParam("p_end_date",   null);
         searchVO.clearCache();
     }
 
@@ -74,8 +75,8 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
         }
 
         try {
-            Date startDate = Date.valueOf(startDateStr);
-            Date endDate   = Date.valueOf(endDateStr);
+            Date startDate = toOAFDate(startDateStr);
+            Date endDate   = toOAFDate(endDateStr);
 
             long startTime = startDate.dateValue().getTime();
             long endTime   = endDate.dateValue().getTime();
@@ -121,7 +122,7 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
         if (leaveId != null && !leaveId.isEmpty()) {
             // UPDATE mode – fetch existing record
             createVO.setWhereClause("LEAVE_ID = :p_leave_id");
-            createVO.setBindVariableValue("p_leave_id", new Number(leaveId));
+            createVO.setNamedWhereClauseParam("p_leave_id", new Number(leaveId));
             createVO.executeQuery();
         } else {
             // CREATE mode – prepare a new row
@@ -142,25 +143,45 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
     // Private helper – fetch employee details and set on the row
     // -----------------------------------------------------------------------
     private void populateEmployeeInfo(XxsifyEmpLeaveCreateVORowImpl row, String empId) {
+        java.sql.PreparedStatement stmt = null;
+        java.sql.ResultSet rs = null;
         try {
             String sql =
                 "SELECT employee_number, full_name " +
                 "FROM   per_all_people_f " +
-                "WHERE  person_id = :1 " +
+                "WHERE  person_id = ? " +
                 "AND    SYSDATE BETWEEN effective_start_date AND effective_end_date " +
                 "AND    ROWNUM = 1";
 
-            Object[] params = { new Number(empId) };
-            Object[] result = (Object[]) getDBTransaction()
-                .executeSelectOneValue(sql, params, null);
+            stmt = getOADBTransaction().getJdbcConnection().prepareStatement(sql);
+            stmt.setInt(1, Integer.parseInt(empId));
+            rs = stmt.executeQuery();
 
-            if (result != null) {
+            if (rs.next()) {
                 row.setEmployeeId(new Number(empId));
-                row.setEmployeeNumber((String) result[0]);
-                row.setEmployeeName((String) result[1]);
+                row.setEmployeeNumber(rs.getString(1));
+                row.setEmployeeName(rs.getString(2));
             }
-        } catch (Exception ex) {
+        } catch (java.sql.SQLException ex) {
             // Non-fatal: employee info will remain blank for manual entry
+        } finally {
+            try { if (rs   != null) rs.close();   } catch (java.sql.SQLException e) { /* ignore */ }
+            try { if (stmt != null) stmt.close(); } catch (java.sql.SQLException e) { /* ignore */ }
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    // Private helper – convert "yyyy-MM-dd" String to oracle.jbo.domain.Date
+    // -----------------------------------------------------------------------
+    private Date toOAFDate(String dateStr) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsed = sdf.parse(dateStr);
+            return new Date(new Timestamp(parsed.getTime()));
+        } catch (java.text.ParseException e) {
+            throw new OAException(
+                "Invalid date format '" + dateStr + "'. Expected yyyy-MM-dd.",
+                OAException.ERROR);
         }
     }
 

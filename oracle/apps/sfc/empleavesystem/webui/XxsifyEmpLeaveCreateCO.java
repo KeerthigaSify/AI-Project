@@ -8,8 +8,10 @@ package oracle.apps.sfc.empleavesystem.webui;
 import oracle.apps.fnd.framework.OAException;
 import oracle.apps.fnd.framework.webui.OAControllerImpl;
 import oracle.apps.fnd.framework.webui.OAPageContext;
+import oracle.apps.fnd.framework.webui.OAWebBeanConstants;
 import oracle.apps.fnd.framework.webui.beans.OAWebBean;
 import oracle.apps.fnd.framework.OAApplicationModule;
+import java.io.Serializable;
 
 /**
  * Controller for the Employee Leave Create / Update Page.
@@ -36,11 +38,11 @@ public class XxsifyEmpLeaveCreateCO extends OAControllerImpl {
 
         // Fallback: read employee from Oracle login if not passed as URL param
         if (empId == null || empId.trim().isEmpty()) {
-            empId = pageContext.getEmployeeId();
+            empId = String.valueOf(pageContext.getEmployeeId());
         }
 
         // Initialise Create / Update page
-        am.invokeMethod("initCreatePage", new Object[]{ empId, leaveId });
+        am.invokeMethod("initCreatePage", new Serializable[]{ empId, leaveId });
     }
 
     // -----------------------------------------------------------------------
@@ -59,7 +61,7 @@ public class XxsifyEmpLeaveCreateCO extends OAControllerImpl {
             String endDate   = pageContext.getParameter("EndDate");
 
             am.invokeMethod("calculateLeaveDays",
-                new Object[]{ startDate, endDate });
+                new Serializable[]{ startDate, endDate });
 
         } else if ("Save".equals(event)) {
             // Validate mandatory fields

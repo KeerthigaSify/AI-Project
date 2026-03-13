@@ -48,10 +48,8 @@ public class XxsifyEmpLeaveEOImpl extends OAEntityImpl {
     public void create(AttributeList attributeList) {
         super.create(attributeList);
 
-        // Generate PK from sequence
-        Number leaveId = (Number) getDBTransaction()
-            .executeSelectOneValue(
-                "SELECT " + SEQUENCE_NAME + ".NEXTVAL FROM DUAL", null, null);
+        // Generate PK from sequence using OAF sequence API
+        Number leaveId = getOADBTransaction().getSequenceValue(SEQUENCE_NAME);
         setLeaveId(leaveId);
 
         // Populate WHO columns
