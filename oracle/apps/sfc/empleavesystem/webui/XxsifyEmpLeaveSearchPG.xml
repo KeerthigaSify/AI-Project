@@ -1,159 +1,247 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE root [
-  <!ENTITY % BC4J.dtd SYSTEM "BC4J.dtd">
-  %BC4J.dtd;
-]>
+<?xml version = '1.0' encoding = 'UTF-8'?>
 <!--
-    Sify Technologies – Employee Leave System
+    Sify Technologies - Employee Leave System
     Page XML   : XxsifyEmpLeaveSearchPG
     Controller : XxsifyEmpLeaveSearchCO
     AM         : XxsifyEmpLeaveAM
     VO         : XxsifyEmpLeaveSearchVO
 -->
 <page xmlns:jrad="http://xmlns.oracle.com/jrad"
-      xmlns:ui="http://xmlns.oracle.com/uix/ui"
       xmlns:oa="http://xmlns.oracle.com/oa"
+      xmlns:ui="http://xmlns.oracle.com/uix/ui"
       xmlns:user="http://xmlns.oracle.com/jrad/user"
-      version="9.0.3.8.22_1571"
-      xml:lang="en-US">
+      xmlns="http://xmlns.oracle.com/jrad"
+      version="10.1.3_"
+      xml:lang="en-US"
+      file-version="$Header$">
 
-  <content>
-    <oa:pageLayout id="PageLayout"
-                   pageTitle="Employee Leave Search"
-                   windowTitle="Sify - Employee Leave System"
-                   AM="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM"
-                   controller="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveSearchCO">
+   <content>
+      <oa:pageLayout id="pageLayoutRN"
+                     controllerClass="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveSearchCO"
+                     amDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM">
 
-      <content>
+         <ui:corporateBranding>
+            <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
+         </ui:corporateBranding>
 
-        <!-- ============================================================
-             Search Region
-        ============================================================ -->
-        <oa:query id="SearchRN"
-                  searchPanelTitle="Search"
-                  ViewUsageName="XxsifyEmpLeaveSearchVO"
-                  AutoCustomization="true">
+         <ui:contents>
+            <oa:header id="MainRN" text="Employee Leave Search">
+               <ui:contents>
 
-          <content>
-            <oa:row id="SearchRow1">
-              <content>
+                  <!-- ============================================================
+                       Search Criteria Region
+                  ============================================================ -->
+                  <oa:rowLayout id="SearchRN" hAlign="center">
+                     <ui:contents>
+                        <oa:defaultSingleColumn id="SingleDefaultRN" headerDisabled="true">
+                           <ui:contents>
 
-                <!-- Leave Type LOV -->
-                <oa:lovItem id="LeaveTypeItem"
-                            prompt="Leave Type"
-                            viewName="XxsifyEmpLeaveSearchVO"
-                            viewAttr="LeaveType"
-                            required="false"
-                            lovObjectName="XxsifyLeaveTypeLovVO"
-                            CSSClass="OraFieldText"
-                            columns="30">
-                  <oa:lovMappings>
-                    <oa:lovMap lovAttrib="LookupCode"
-                               targetVOAttrib="LeaveType"
-                               targetUsageName="XxsifyEmpLeaveSearchVO"/>
-                  </oa:lovMappings>
-                </oa:lovItem>
+                              <!-- Leave Type LOV -->
+                              <oa:messageLovInput id="LeaveType" prompt="Leave Type">
+                                 <lovContents>
+                                    <oa:listOfValues id="LeaveTypeLov">
+                                       <ui:contents>
+                                          <oa:table name="LeaveTypeLov" id="XxsifyLeaveTypeLovVO">
+                                             <ui:contents>
+                                                <oa:messageStyledText id="LeaveTypeSrch"
+                                                                      viewName="XxsifyLeaveTypeLovVO"
+                                                                      viewAttr="LookupCode"
+                                                                      queryable="true"
+                                                                      prompt="Leave Type"/>
+                                             </ui:contents>
+                                          </oa:table>
+                                       </ui:contents>
+                                    </oa:listOfValues>
+                                 </lovContents>
+                                 <lovMappings>
+                                    <lovMap id="lovMap1"
+                                            lovItem="LeaveTypeSrch"
+                                            resultTo="LeaveType"
+                                            criteriaFrom="LeaveType"/>
+                                 </lovMappings>
+                              </oa:messageLovInput>
 
-                <!-- Start Date -->
-                <oa:messageDateField id="StartDate"
-                                     prompt="Start Date"
-                                     viewName="XxsifyEmpLeaveSearchVO"
-                                     viewAttr="StartDate"
-                                     required="false"/>
+                              <!-- Start Date -->
+                              <oa:messageDateField id="StartDate"
+                                                   prompt="Start Date"
+                                                   viewName="XxsifyEmpLeaveSearchVO"
+                                                   viewAttr="StartDate"
+                                                   required="false"/>
 
-                <!-- End Date -->
-                <oa:messageDateField id="EndDate"
-                                     prompt="End Date"
-                                     viewName="XxsifyEmpLeaveSearchVO"
-                                     viewAttr="EndDate"
-                                     required="false"/>
+                              <!-- End Date -->
+                              <oa:messageDateField id="EndDate"
+                                                   prompt="End Date"
+                                                   viewName="XxsifyEmpLeaveSearchVO"
+                                                   viewAttr="EndDate"
+                                                   required="false"/>
 
-              </content>
-            </oa:row>
-          </content>
+                           </ui:contents>
+                        </oa:defaultSingleColumn>
+                     </ui:contents>
+                  </oa:rowLayout>
 
-          <!-- Search / Clear buttons -->
-          <oa:submitButton id="SearchBtn"
-                           prompt="Search"
-                           event="Search"/>
-          <oa:submitButton id="ClearBtn"
-                           prompt="Clear"
-                           event="Clear"/>
+                  <oa:spacer id="spacer1" height="1" width="5"/>
 
-        </oa:query>
+                  <!-- ============================================================
+                       Search / Clear / Create Buttons
+                  ============================================================ -->
+                  <oa:rowLayout id="ButtonRN" hAlign="center">
+                     <ui:contents>
+                        <oa:pageButtonBar id="PageButtonBarRN">
+                           <ui:contents>
 
-        <!-- ============================================================
-             Create Button
-        ============================================================ -->
-        <oa:submitButton id="CreateBtn"
-                         prompt="Create"
-                         event="Create"/>
+                              <oa:submitButton id="Search"
+                                               text="Search"
+                                               prompt="Search"
+                                               styleClass="OraDataText">
+                                 <ui:primaryClientAction>
+                                    <ui:firePartialAction event="Search" id="firePartialSearch"/>
+                                 </ui:primaryClientAction>
+                              </oa:submitButton>
 
-        <!-- ============================================================
-             Results Table
-        ============================================================ -->
-        <oa:table id="ResultsTable"
-                  viewName="XxsifyEmpLeaveSearchVO"
-                  title="Leave Records"
-                  emptyText="No leave records found. Please refine your search."
-                  width="100%">
-          <content>
+                              <oa:spacer id="spacer2" width="5"/>
 
-            <oa:column id="LeaveTypeCol"
-                       prompt="Leave Type"
-                       viewName="XxsifyEmpLeaveSearchVO"
-                       viewAttr="LeaveType"
-                       sortable="true"/>
+                              <oa:submitButton id="Clear"
+                                               text="Clear"
+                                               prompt="Clear"
+                                               styleClass="OraDataText">
+                                 <ui:primaryClientAction>
+                                    <ui:firePartialAction event="Clear" id="firePartialClear"/>
+                                 </ui:primaryClientAction>
+                              </oa:submitButton>
 
-            <oa:column id="StartDateCol"
-                       prompt="Start Date"
-                       viewName="XxsifyEmpLeaveSearchVO"
-                       viewAttr="StartDate"
-                       sortable="true"/>
+                              <oa:spacer id="spacer3" width="5"/>
 
-            <oa:column id="EndDateCol"
-                       prompt="End Date"
-                       viewName="XxsifyEmpLeaveSearchVO"
-                       viewAttr="EndDate"
-                       sortable="true"/>
+                              <oa:submitButton id="Create"
+                                               text="Create"
+                                               prompt="Create"
+                                               styleClass="OraDataText">
+                                 <ui:primaryClientAction>
+                                    <ui:firePartialAction event="Create" id="firePartialCreate"/>
+                                 </ui:primaryClientAction>
+                              </oa:submitButton>
 
-            <oa:column id="NoOfDaysCol"
-                       prompt="No of Days"
-                       viewName="XxsifyEmpLeaveSearchVO"
-                       viewAttr="NoOfDays"/>
+                           </ui:contents>
+                        </oa:pageButtonBar>
+                     </ui:contents>
+                  </oa:rowLayout>
 
-            <oa:column id="StatusCol"
-                       prompt="Status"
-                       viewName="XxsifyEmpLeaveSearchVO"
-                       viewAttr="Status"/>
+                  <oa:spacer id="spacer4" width="5"/>
 
-            <oa:column id="ReasonCol"
-                       prompt="Reason"
-                       viewName="XxsifyEmpLeaveSearchVO"
-                       viewAttr="Reason"/>
+                  <!-- ============================================================
+                       Results Table
+                  ============================================================ -->
+                  <oa:advancedTable id="ResultsTableRN"
+                                    viewName="XxsifyEmpLeaveSearchVO"
+                                    width="100%"
+                                    emptyText="No leave records found. Please refine your search."
+                                    colFreezeEnabled="false">
+                     <ui:contents>
 
-            <!-- Update Icon column -->
-            <oa:column id="UpdateCol" prompt="Update">
-              <content>
-                <oa:image id="UpdateIcon"
-                          source="/OA_MEDIA/updateicon_enabled.gif"
-                          shortDesc="Update Leave Record"
-                          firePartialAction="false"
-                          event="Update">
-                  <oa:onSubmit>
-                    <oa:firePartialActionParam name="leaveId"
-                                               viewName="XxsifyEmpLeaveSearchVO"
-                                               viewAttr="LeaveId"/>
-                  </oa:onSubmit>
-                </oa:image>
-              </content>
-            </oa:column>
+                        <oa:column id="LeaveTypeCol">
+                           <ui:columnHeader>
+                              <oa:sortableHeader id="LeaveTypeHdr" prompt="Leave Type"/>
+                           </ui:columnHeader>
+                           <ui:contents>
+                              <oa:messageTextInput id="LeaveTypeI"
+                                                   viewAttr="LeaveType"
+                                                   readOnly="true"
+                                                   prompt="Leave Type"/>
+                           </ui:contents>
+                        </oa:column>
 
-          </content>
-        </oa:table>
+                        <oa:column id="StartDateCol">
+                           <ui:columnHeader>
+                              <oa:sortableHeader id="StartDateHdr" prompt="Start Date"/>
+                           </ui:columnHeader>
+                           <ui:contents>
+                              <oa:messageTextInput id="StartDateI"
+                                                   viewAttr="StartDate"
+                                                   readOnly="true"
+                                                   prompt="Start Date"
+                                                   dataType="DATE"/>
+                           </ui:contents>
+                        </oa:column>
 
-      </content>
-    </oa:pageLayout>
-  </content>
+                        <oa:column id="EndDateCol">
+                           <ui:columnHeader>
+                              <oa:sortableHeader id="EndDateHdr" prompt="End Date"/>
+                           </ui:columnHeader>
+                           <ui:contents>
+                              <oa:messageTextInput id="EndDateI"
+                                                   viewAttr="EndDate"
+                                                   readOnly="true"
+                                                   prompt="End Date"
+                                                   dataType="DATE"/>
+                           </ui:contents>
+                        </oa:column>
+
+                        <oa:column id="NoOfDaysCol" columnDataFormat="numberFormat">
+                           <ui:columnHeader>
+                              <oa:sortableHeader id="NoOfDaysHdr" prompt="No of Days"/>
+                           </ui:columnHeader>
+                           <ui:contents>
+                              <oa:messageTextInput id="NoOfDaysI"
+                                                   viewAttr="NoOfDays"
+                                                   readOnly="true"
+                                                   prompt="No of Days"
+                                                   dataType="NUMBER"/>
+                           </ui:contents>
+                        </oa:column>
+
+                        <oa:column id="StatusCol">
+                           <ui:columnHeader>
+                              <oa:sortableHeader id="StatusHdr" prompt="Status"/>
+                           </ui:columnHeader>
+                           <ui:contents>
+                              <oa:messageTextInput id="StatusI"
+                                                   viewAttr="Status"
+                                                   readOnly="true"
+                                                   prompt="Status"/>
+                           </ui:contents>
+                        </oa:column>
+
+                        <oa:column id="ReasonCol">
+                           <ui:columnHeader>
+                              <oa:sortableHeader id="ReasonHdr" prompt="Reason"/>
+                           </ui:columnHeader>
+                           <ui:contents>
+                              <oa:messageTextInput id="ReasonI"
+                                                   viewAttr="Reason"
+                                                   readOnly="true"
+                                                   prompt="Reason"/>
+                           </ui:contents>
+                        </oa:column>
+
+                        <!-- Update Icon Column -->
+                        <oa:column id="UpdateCol" columnDataFormat="iconButtonFormat">
+                           <ui:columnHeader>
+                              <oa:sortableHeader id="UpdateHdr" prompt="Update"/>
+                           </ui:columnHeader>
+                           <ui:contents>
+                              <oa:image id="UpdateIcon"
+                                        source="updateicon_enabled.gif"
+                                        prompt="Update">
+                                 <ui:primaryClientAction>
+                                    <ui:fireAction event="Update" id="fireActionUpdate">
+                                       <ui:parameters>
+                                          <ui:parameter key="leaveId"
+                                                        value="${oa.XxsifyEmpLeaveSearchVO.LeaveId}"/>
+                                       </ui:parameters>
+                                    </ui:fireAction>
+                                 </ui:primaryClientAction>
+                              </oa:image>
+                           </ui:contents>
+                        </oa:column>
+
+                     </ui:contents>
+                  </oa:advancedTable>
+
+               </ui:contents>
+            </oa:header>
+         </ui:contents>
+
+      </oa:pageLayout>
+   </content>
 
 </page>

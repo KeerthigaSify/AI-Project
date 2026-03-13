@@ -1,10 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE root [
-  <!ENTITY % BC4J.dtd SYSTEM "BC4J.dtd">
-  %BC4J.dtd;
-]>
+<?xml version = '1.0' encoding = 'UTF-8'?>
 <!--
-    Sify Technologies – Employee Leave System
+    Sify Technologies - Employee Leave System
     Page XML   : XxsifyEmpLeaveCreatePG
     Controller : XxsifyEmpLeaveCreateCO
     AM         : XxsifyEmpLeaveAM
@@ -12,100 +8,147 @@
     EO         : XxsifyEmpLeaveEO
 -->
 <page xmlns:jrad="http://xmlns.oracle.com/jrad"
-      xmlns:ui="http://xmlns.oracle.com/uix/ui"
       xmlns:oa="http://xmlns.oracle.com/oa"
+      xmlns:ui="http://xmlns.oracle.com/uix/ui"
       xmlns:user="http://xmlns.oracle.com/jrad/user"
-      version="9.0.3.8.22_1571"
-      xml:lang="en-US">
+      xmlns="http://xmlns.oracle.com/jrad"
+      version="10.1.3_"
+      xml:lang="en-US"
+      file-version="$Header$">
 
-  <content>
-    <oa:pageLayout id="PageLayout"
-                   pageTitle="Employee Leave Request"
-                   windowTitle="Sify - Employee Leave System"
-                   AM="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM"
-                   controller="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveCreateCO">
+   <content>
+      <oa:pageLayout id="pageLayoutRN"
+                     controllerClass="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveCreateCO"
+                     amDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM">
 
-      <content>
+         <ui:corporateBranding>
+            <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
+         </ui:corporateBranding>
 
-        <!-- ============================================================
-             Leave Details Form Header
-        ============================================================ -->
-        <oa:header id="FormHeader" prompt="Leave Details">
-          <content>
+         <ui:contents>
+            <oa:header id="MainRN" text="Employee Leave Request">
+               <ui:contents>
 
-            <!-- Employee Number – Display Only (auto from Oracle login) -->
-            <oa:messageTextInput id="EmployeeNumber"
-                                 prompt="Employee No"
-                                 viewName="XxsifyEmpLeaveCreateVO"
-                                 viewAttr="EmployeeNumber"
-                                 readOnly="true"
-                                 required="false"/>
+                  <!-- ============================================================
+                       Leave Details Form
+                  ============================================================ -->
+                  <oa:rowLayout id="FormRN" hAlign="center">
+                     <ui:contents>
+                        <oa:defaultSingleColumn id="SingleDefaultRN" headerDisabled="true">
+                           <ui:contents>
 
-            <!-- Employee Name – Display Only (auto from Oracle login) -->
-            <oa:messageTextInput id="EmployeeName"
-                                 prompt="Employee Name"
-                                 viewName="XxsifyEmpLeaveCreateVO"
-                                 viewAttr="EmployeeName"
-                                 readOnly="true"
-                                 required="false"/>
+                              <!-- Employee Number - auto-populated, read only -->
+                              <oa:messageTextInput id="EmployeeNumber"
+                                                   prompt="Employee No"
+                                                   viewName="XxsifyEmpLeaveCreateVO"
+                                                   viewAttr="EmployeeNumber"
+                                                   readOnly="true"/>
 
-            <!-- Leave Type Picklist -->
-            <oa:messageChoice id="LeaveType"
-                              prompt="Leave Type"
-                              viewName="XxsifyEmpLeaveCreateVO"
-                              viewAttr="LeaveType"
-                              required="true"
-                              pickListVOName="XxsifyLeaveTypePicklistVO"
-                              pickListDisplayAttrib="Meaning"
-                              pickListValueAttrib="LookupCode"/>
+                              <!-- Employee Name - auto-populated, read only -->
+                              <oa:messageTextInput id="EmployeeName"
+                                                   prompt="Employee Name"
+                                                   viewName="XxsifyEmpLeaveCreateVO"
+                                                   viewAttr="EmployeeName"
+                                                   readOnly="true"/>
 
-            <!-- Start Date -->
-            <oa:messageDateField id="StartDate"
-                                 prompt="Start Date"
-                                 viewName="XxsifyEmpLeaveCreateVO"
-                                 viewAttr="StartDate"
-                                 required="true"/>
+                              <!-- Leave Type Picklist -->
+                              <oa:messageChoice id="LeaveType"
+                                                prompt="Leave Type"
+                                                viewName="XxsifyEmpLeaveCreateVO"
+                                                viewAttr="LeaveType"
+                                                required="true"
+                                                pickListViewName="XxsifyLeaveTypePicklistVO"
+                                                pickListDispAttr="Meaning"
+                                                pickListValAttr="LookupCode"/>
 
-            <!-- End Date -->
-            <oa:messageDateField id="EndDate"
-                                 prompt="End Date"
-                                 viewName="XxsifyEmpLeaveCreateVO"
-                                 viewAttr="EndDate"
-                                 required="true"/>
+                              <!-- Start Date -->
+                              <oa:messageDateField id="StartDate"
+                                                   prompt="Start Date"
+                                                   viewName="XxsifyEmpLeaveCreateVO"
+                                                   viewAttr="StartDate"
+                                                   required="true"/>
 
-            <!-- Calculate Period Button -->
-            <oa:submitButton id="CalculatePeriodBtn"
-                             prompt="Calculate Period"
-                             event="CalculatePeriod"/>
+                              <!-- End Date -->
+                              <oa:messageDateField id="EndDate"
+                                                   prompt="End Date"
+                                                   viewName="XxsifyEmpLeaveCreateVO"
+                                                   viewAttr="EndDate"
+                                                   required="true"/>
 
-            <!-- No of Leave Days – Display Only (auto-calculated) -->
-            <oa:messageTextInput id="NoOfDays"
-                                 prompt="No of Leave Days"
-                                 viewName="XxsifyEmpLeaveCreateVO"
-                                 viewAttr="NoOfDays"
-                                 readOnly="true"
-                                 required="false"/>
+                              <!-- Calculate Period Button -->
+                              <oa:submitButton id="CalculatePeriod"
+                                               text="Calculate Period"
+                                               prompt="Calculate Period"
+                                               styleClass="OraDataText">
+                                 <ui:primaryClientAction>
+                                    <ui:firePartialAction event="CalculatePeriod" id="firePartialCalc"/>
+                                 </ui:primaryClientAction>
+                              </oa:submitButton>
 
-            <!-- Reason – Text Area -->
-            <oa:messageTextArea id="Reason"
-                                prompt="Reason"
-                                viewName="XxsifyEmpLeaveCreateVO"
-                                viewAttr="Reason"
-                                rows="4"
-                                columns="60"
-                                required="true"/>
+                              <!-- No of Leave Days - auto-calculated, read only -->
+                              <oa:messageTextInput id="NoOfDays"
+                                                   prompt="No of Leave Days"
+                                                   viewName="XxsifyEmpLeaveCreateVO"
+                                                   viewAttr="NoOfDays"
+                                                   readOnly="true"
+                                                   dataType="NUMBER"/>
 
-          </content>
-        </oa:header>
+                              <!-- Reason Text Area -->
+                              <oa:messageTextArea id="Reason"
+                                                  prompt="Reason"
+                                                  viewName="XxsifyEmpLeaveCreateVO"
+                                                  viewAttr="Reason"
+                                                  required="true"
+                                                  rows="4"
+                                                  columns="60"/>
 
-        <!-- ============================================================
-             Action Buttons
-        ============================================================ -->
-        <oa:submitButton id="SaveBtn"   prompt="Save"   event="Save"/>
-        <oa:submitButton id="CancelBtn" prompt="Cancel" event="Cancel"/>
+                           </ui:contents>
+                        </oa:defaultSingleColumn>
+                     </ui:contents>
+                  </oa:rowLayout>
 
-      </content>
-    </oa:pageLayout>
-  </content>
+                  <oa:spacer id="spacer1" height="1" width="5"/>
+
+                  <!-- ============================================================
+                       Save / Cancel Buttons
+                  ============================================================ -->
+                  <oa:rowLayout id="ButtonRN" hAlign="center">
+                     <ui:contents>
+                        <oa:pageButtonBar id="PageButtonBarRN">
+                           <ui:contents>
+
+                              <oa:submitButton id="Save"
+                                               text="Save"
+                                               prompt="Save"
+                                               styleClass="OraDataText">
+                                 <ui:primaryClientAction>
+                                    <ui:firePartialAction event="Save" id="firePartialSave"/>
+                                 </ui:primaryClientAction>
+                              </oa:submitButton>
+
+                              <oa:spacer id="spacer2" width="5"/>
+
+                              <oa:submitButton id="Cancel"
+                                               text="Cancel"
+                                               prompt="Cancel"
+                                               styleClass="OraDataText"
+                                               serverUnvalidated="true"
+                                               unvalidated="true">
+                                 <ui:primaryClientAction>
+                                    <ui:firePartialAction event="Cancel" id="firePartialCancel"/>
+                                 </ui:primaryClientAction>
+                              </oa:submitButton>
+
+                           </ui:contents>
+                        </oa:pageButtonBar>
+                     </ui:contents>
+                  </oa:rowLayout>
+
+               </ui:contents>
+            </oa:header>
+         </ui:contents>
+
+      </oa:pageLayout>
+   </content>
 
 </page>
