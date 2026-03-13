@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Sify Technologies – Employee Leave System
+    Entity Object : XxsifyEmpLeaveEO
+    Base Table    : xxsify_emp_leave_det_t
+-->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxsifyEmpLeaveEO"
+  Version="12.1.0.0.0"
+  DBObjectName="XXSIFY_EMP_LEAVE_DET_T"
+  DBObjectType="table"
+  AliasName="XxsifyEmpLeave"
+  BindingStyle="Oracle"
+  UseGlueCode="false">
+
+  <Attribute
+    Name="LeaveId"
+    IsNotNull="true"
+    Precision="15"
+    Scale="0"
+    ColumnName="LEAVE_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+  </Attribute>
+
+  <Attribute
+    Name="EmployeeId"
+    IsNotNull="true"
+    Precision="15"
+    Scale="0"
+    ColumnName="EMPLOYEE_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER">
+  </Attribute>
+
+  <Attribute
+    Name="EmployeeNumber"
+    IsNotNull="true"
+    MaxLength="30"
+    ColumnName="EMPLOYEE_NUMBER"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+  </Attribute>
+
+  <Attribute
+    Name="EmployeeName"
+    IsNotNull="true"
+    MaxLength="240"
+    ColumnName="EMPLOYEE_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+  </Attribute>
+
+  <Attribute
+    Name="LeaveType"
+    IsNotNull="true"
+    MaxLength="100"
+    ColumnName="LEAVE_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+  </Attribute>
+
+  <Attribute
+    Name="StartDate"
+    IsNotNull="true"
+    ColumnName="START_DATE"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE">
+  </Attribute>
+
+  <Attribute
+    Name="EndDate"
+    IsNotNull="true"
+    ColumnName="END_DATE"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE">
+  </Attribute>
+
+  <Attribute
+    Name="NoOfDays"
+    Precision="10"
+    Scale="0"
+    ColumnName="NO_OF_DAYS"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER">
+  </Attribute>
+
+  <Attribute
+    Name="Reason"
+    IsNotNull="true"
+    MaxLength="1000"
+    ColumnName="REASON"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2">
+  </Attribute>
+
+  <Attribute
+    Name="Status"
+    MaxLength="30"
+    ColumnName="STATUS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    DefaultValue="PENDING">
+  </Attribute>
+
+  <!-- WHO Columns -->
+  <Attribute
+    Name="CreatedBy"
+    IsNotNull="true"
+    Precision="15"
+    Scale="0"
+    ColumnName="CREATED_BY"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER">
+  </Attribute>
+
+  <Attribute
+    Name="CreationDate"
+    IsNotNull="true"
+    ColumnName="CREATION_DATE"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE">
+  </Attribute>
+
+  <Attribute
+    Name="LastUpdatedBy"
+    IsNotNull="true"
+    Precision="15"
+    Scale="0"
+    ColumnName="LAST_UPDATED_BY"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER">
+  </Attribute>
+
+  <Attribute
+    Name="LastUpdateDate"
+    IsNotNull="true"
+    ColumnName="LAST_UPDATE_DATE"
+    SQLType="DATE"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE">
+  </Attribute>
+
+  <Attribute
+    Name="LastUpdateLogin"
+    Precision="15"
+    Scale="0"
+    ColumnName="LAST_UPDATE_LOGIN"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER">
+  </Attribute>
+
+  <!-- DFF Columns -->
+  <Attribute Name="AttributeCategory" MaxLength="150" ColumnName="ATTRIBUTE_CATEGORY" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute1"  MaxLength="150" ColumnName="ATTRIBUTE1"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute2"  MaxLength="150" ColumnName="ATTRIBUTE2"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute3"  MaxLength="150" ColumnName="ATTRIBUTE3"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute4"  MaxLength="150" ColumnName="ATTRIBUTE4"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute5"  MaxLength="150" ColumnName="ATTRIBUTE5"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute6"  MaxLength="150" ColumnName="ATTRIBUTE6"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute7"  MaxLength="150" ColumnName="ATTRIBUTE7"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute8"  MaxLength="150" ColumnName="ATTRIBUTE8"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute9"  MaxLength="150" ColumnName="ATTRIBUTE9"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute10" MaxLength="150" ColumnName="ATTRIBUTE10" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute11" MaxLength="150" ColumnName="ATTRIBUTE11" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute12" MaxLength="150" ColumnName="ATTRIBUTE12" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute13" MaxLength="150" ColumnName="ATTRIBUTE13" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute14" MaxLength="150" ColumnName="ATTRIBUTE14" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="Attribute15" MaxLength="150" ColumnName="ATTRIBUTE15" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+
+  <!-- Error Tracking Columns -->
+  <Attribute Name="ErrorFlag" MaxLength="1"    ColumnName="ERROR_FLAG" SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+  <Attribute Name="ErrorMsg"  MaxLength="4000" ColumnName="ERROR_MSG"  SQLType="VARCHAR" Type="java.lang.String" ColumnType="VARCHAR2"/>
+
+</Entity>

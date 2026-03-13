@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Sify Technologies – Employee Leave System
+    LOV View Object : XxsifyLeaveTypeLovVO
+    Purpose         : LOV for Leave Type field on Search Page (from FND_LOOKUPS)
+-->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxsifyLeaveTypeLovVO"
+  Version="12.1.0.0.0"
+  ComponentClass="oracle.apps.sfc.empleavesystem.lov.server.XxsifyLeaveTypeLovVOImpl"
+  RowClass="oracle.apps.sfc.empleavesystem.lov.server.XxsifyLeaveTypeLovVORowImpl"
+  BindingStyle="OracleName"
+  CustomQuery="true">
+
+  <SQLQuery><![CDATA[
+SELECT meaning,
+       lookup_code
+FROM   fnd_lookups
+WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
+AND    enabled_flag = 'Y'
+AND    SYSDATE BETWEEN NVL(start_date_active, SYSDATE)
+                   AND NVL(end_date_active,   SYSDATE)
+ORDER BY meaning
+  ]]></SQLQuery>
+
+  <ViewAttribute Name="Meaning"    Type="java.lang.String" ColumnName="MEANING"     SQLType="VARCHAR"/>
+  <ViewAttribute Name="LookupCode" Type="java.lang.String" ColumnName="LOOKUP_CODE" SQLType="VARCHAR"/>
+
+</ViewObject>

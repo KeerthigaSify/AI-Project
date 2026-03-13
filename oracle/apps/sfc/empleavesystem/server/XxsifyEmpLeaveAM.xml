@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Sify Technologies – Employee Leave System
+    Application Module : XxsifyEmpLeaveAM
+-->
+<AppModule
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxsifyEmpLeaveAM"
+  Version="12.1.0.0.0"
+  ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAMImpl"
+  DBConnect="java:comp/env/jdbc/OracleDS">
+
+  <ViewUsage
+    Name="XxsifyEmpLeaveSearchVO"
+    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveSearchVO"/>
+
+  <ViewUsage
+    Name="XxsifyEmpLeaveCreateVO"
+    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveCreateVO"/>
+
+  <ViewUsage
+    Name="XxsifyEmpLeaveEVO"
+    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVO"/>
+
+  <ViewUsage
+    Name="XxsifyLeaveTypeLovVO"
+    ViewObjectName="oracle.apps.sfc.empleavesystem.lov.server.XxsifyLeaveTypeLovVO"/>
+
+  <ViewUsage
+    Name="XxsifyLeaveTypePicklistVO"
+    ViewObjectName="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVO"/>
+
+</AppModule>

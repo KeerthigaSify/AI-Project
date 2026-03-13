@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Sify Technologies – Employee Leave System
+    Page XML     : XxsifyEmpLeaveSearchPG
+    Controller   : XxsifyEmpLeaveSearchCO
+    AM           : XxsifyEmpLeaveAM
+    VO           : XxsifyEmpLeaveSearchVO
+-->
+<page xmlns:oa="http://xmlns.oracle.com/oa"
+      xmlns:jbo="http://xmlns.oracle.com/bc4j"
+      xmlns="http://xmlns.oracle.com/oa"
+      Version="12.1.0.0.0"
+      Name="XxsifyEmpLeaveSearchPG"
+      ComponentClass="oracle.apps.fnd.framework.webui.beans.OAPageBean"
+      Title="Employee Leave Search"
+      WindowTitle="Sify – Employee Leave System"
+      ApplicationModule="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM"
+      ApplicationModuleUsage="XxsifyEmpLeaveAMLocal"
+      RenderNewStyle="true"
+      Controller="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveSearchCO">
+
+  <!-- ======================================================
+       Page Header
+  ====================================================== -->
+  <oa:pageLayout id="PageLayout"
+                 PageTitle="Employee Leave Search"
+                 HelpTopicId="xxsify_emp_leave_search">
+
+    <contents>
+
+      <!-- ================================================
+           Search Region
+      ================================================ -->
+      <oa:query id="SearchRN"
+                searchPanelTitle="Search"
+                SearchAMDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM"
+                SearchAMUsageName="XxsifyEmpLeaveAMLocal"
+                Mode="queryonly">
+
+        <oa:row id="Row1">
+
+          <!-- Leave Type LOV -->
+          <oa:item id="LeaveTypeItem"
+                   prompt="Leave Type">
+            <oa:lov id="LeaveTypeLov"
+                    lovObjectName="XxsifyLeaveTypeLovVO"
+                    scopeAMDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM"
+                    scopeUsageName="XxsifyEmpLeaveAMLocal"
+                    cssClass="OraFieldText"
+                    columns="30"
+                    required="false">
+              <oa:lovMappings>
+                <oa:lovMapping lovAttribute="LookupCode"
+                               targetVOAttributeName="LeaveType"
+                               targetVOUsageName="XxsifyEmpLeaveSearchVO"/>
+                <oa:lovMapping lovAttribute="Meaning"
+                               targetVOAttributeName="LeaveType"
+                               returnValue="false"/>
+              </oa:lovMappings>
+            </oa:lov>
+          </oa:item>
+
+          <!-- Start Date -->
+          <oa:item id="StartDateItem" prompt="Start Date">
+            <oa:datePicker id="StartDate"
+                           viewName="XxsifyEmpLeaveSearchVO"
+                           viewAttr="StartDate"
+                           required="false"/>
+          </oa:item>
+
+          <!-- End Date -->
+          <oa:item id="EndDateItem" prompt="End Date">
+            <oa:datePicker id="EndDate"
+                           viewName="XxsifyEmpLeaveSearchVO"
+                           viewAttr="EndDate"
+                           required="false"/>
+          </oa:item>
+
+        </oa:row>
+
+        <!-- Search / Clear buttons -->
+        <oa:submitButton id="SearchBtn"
+                         prompt="Search"
+                         event="Search"/>
+        <oa:submitButton id="ClearBtn"
+                         prompt="Clear"
+                         event="Clear"/>
+
+      </oa:query>
+
+      <!-- ================================================
+           Results Table
+      ================================================ -->
+      <oa:tableLayout id="ResultsRN"
+                      viewName="XxsifyEmpLeaveSearchVO"
+                      title="Leave Records"
+                      emptyTableText="No leave records found. Please refine your search."
+                      width="100%">
+
+        <!-- Create Button (above table) -->
+        <oa:createButton id="CreateBtn"
+                         prompt="Create"
+                         event="Create"/>
+
+        <oa:column id="LeaveTypeCol"     prompt="Leave Type"  viewAttr="LeaveType"/>
+        <oa:column id="StartDateCol"     prompt="Start Date"  viewAttr="StartDate"/>
+        <oa:column id="EndDateCol"       prompt="End Date"    viewAttr="EndDate"/>
+        <oa:column id="NoOfDaysCol"      prompt="No of Days"  viewAttr="NoOfDays"/>
+        <oa:column id="StatusCol"        prompt="Status"      viewAttr="Status"/>
+        <oa:column id="ReasonCol"        prompt="Reason"      viewAttr="Reason"/>
+
+        <!-- Update Icon column -->
+        <oa:column id="UpdateCol" prompt="Update">
+          <oa:image id="UpdateIcon"
+                    source="/OA_MEDIA/updateicon_enabled.gif"
+                    shortDesc="Update Leave Record"
+                    event="Update"
+                    firePartialAction="false">
+            <oa:firePartialActionParameters>
+              <oa:parameter name="leaveId" viewName="XxsifyEmpLeaveSearchVO" viewAttr="LeaveId"/>
+            </oa:firePartialActionParameters>
+          </oa:image>
+        </oa:column>
+
+      </oa:tableLayout>
+
+    </contents>
+  </oa:pageLayout>
+
+</page>

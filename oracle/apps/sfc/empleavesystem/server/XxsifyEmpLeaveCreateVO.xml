@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Sify Technologies – Employee Leave System
+    View Object : XxsifyEmpLeaveCreateVO
+    Purpose     : Entity-based VO for Create / Update operations on xxsify_emp_leave_det_t
+-->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxsifyEmpLeaveCreateVO"
+  Version="12.1.0.0.0"
+  ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveCreateVOImpl"
+  RowClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveCreateVORowImpl"
+  BindingStyle="OracleName">
+
+  <EntityUsage
+    Name="XxsifyEmpLeaveEO"
+    Entity="oracle.apps.sfc.empleavesystem.schema.XxsifyEmpLeaveEO"/>
+
+  <Variable Name="p_leave_id" Kind="where" Type="oracle.jbo.domain.Number"/>
+
+  <ViewAttribute Name="LeaveId"         IsNotNull="true" EntityAttrName="LeaveId"         EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+  <ViewAttribute Name="EmployeeId"      IsNotNull="true" EntityAttrName="EmployeeId"      EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+  <ViewAttribute Name="EmployeeNumber"  IsNotNull="true" EntityAttrName="EmployeeNumber"  EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+  <ViewAttribute Name="EmployeeName"    IsNotNull="true" EntityAttrName="EmployeeName"    EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+  <ViewAttribute Name="LeaveType"       IsNotNull="true" EntityAttrName="LeaveType"       EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+  <ViewAttribute Name="StartDate"       IsNotNull="true" EntityAttrName="StartDate"       EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
+  <ViewAttribute Name="EndDate"         IsNotNull="true" EntityAttrName="EndDate"         EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
+  <ViewAttribute Name="NoOfDays"        EntityAttrName="NoOfDays"        EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+  <ViewAttribute Name="Reason"          IsNotNull="true" EntityAttrName="Reason"          EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+  <ViewAttribute Name="Status"          EntityAttrName="Status"          EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+
+</ViewObject>

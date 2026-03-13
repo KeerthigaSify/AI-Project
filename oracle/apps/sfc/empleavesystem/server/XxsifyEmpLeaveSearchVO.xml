@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Sify Technologies – Employee Leave System
+    View Object : XxsifyEmpLeaveSearchVO
+    Purpose     : Fetch leave records for the logged-in employee with optional filters
+-->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="XxsifyEmpLeaveSearchVO"
+  Version="12.1.0.0.0"
+  ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveSearchVOImpl"
+  RowClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveSearchVORowImpl"
+  BindingStyle="OracleName"
+  CustomQuery="true">
+
+  <SQLQuery><![CDATA[
+SELECT xelt.leave_id,
+       xelt.employee_id,
+       xelt.employee_number,
+       xelt.employee_name,
+       xelt.leave_type,
+       xelt.start_date,
+       xelt.end_date,
+       xelt.no_of_days,
+       xelt.reason,
+       xelt.status
+FROM   xxsify_emp_leave_det_t xelt
+WHERE  xelt.employee_id  = :p_employee_id
+AND    (xelt.leave_type  = :p_leave_type  OR :p_leave_type IS NULL)
+AND    (xelt.start_date >= :p_start_date  OR :p_start_date IS NULL)
+AND    (xelt.end_date   <= :p_end_date    OR :p_end_date   IS NULL)
+ORDER BY xelt.start_date DESC
+  ]]></SQLQuery>
+
+  <Variable Name="p_employee_id" Kind="where" Type="oracle.jbo.domain.Number"/>
+  <Variable Name="p_leave_type"  Kind="where" Type="java.lang.String"/>
+  <Variable Name="p_start_date"  Kind="where" Type="oracle.jbo.domain.Date"/>
+  <Variable Name="p_end_date"    Kind="where" Type="oracle.jbo.domain.Date"/>
+
+  <ViewAttribute Name="LeaveId"       IsNotNull="true" Type="oracle.jbo.domain.Number" ColumnName="LEAVE_ID"       SQLType="NUMERIC"/>
+  <ViewAttribute Name="EmployeeId"    IsNotNull="true" Type="oracle.jbo.domain.Number" ColumnName="EMPLOYEE_ID"    SQLType="NUMERIC"/>
+  <ViewAttribute Name="EmployeeNumber" Type="java.lang.String" ColumnName="EMPLOYEE_NUMBER" SQLType="VARCHAR"/>
+  <ViewAttribute Name="EmployeeName"   Type="java.lang.String" ColumnName="EMPLOYEE_NAME"   SQLType="VARCHAR"/>
+  <ViewAttribute Name="LeaveType"     IsNotNull="true" Type="java.lang.String" ColumnName="LEAVE_TYPE"  SQLType="VARCHAR"/>
+  <ViewAttribute Name="StartDate"     IsNotNull="true" Type="oracle.jbo.domain.Date" ColumnName="START_DATE" SQLType="DATE"/>
+  <ViewAttribute Name="EndDate"       IsNotNull="true" Type="oracle.jbo.domain.Date" ColumnName="END_DATE"   SQLType="DATE"/>
+  <ViewAttribute Name="NoOfDays"      Type="oracle.jbo.domain.Number" ColumnName="NO_OF_DAYS" SQLType="NUMERIC"/>
+  <ViewAttribute Name="Reason"        Type="java.lang.String" ColumnName="REASON"  SQLType="VARCHAR"/>
+  <ViewAttribute Name="Status"        Type="java.lang.String" ColumnName="STATUS"  SQLType="VARCHAR"/>
+
+</ViewObject>
