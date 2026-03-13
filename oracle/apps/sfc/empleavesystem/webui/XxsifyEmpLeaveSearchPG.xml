@@ -1,36 +1,15 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<!--
-    Sify Technologies - Employee Leave System
-    Page XML   : XxsifyEmpLeaveSearchPG
-    Controller : XxsifyEmpLeaveSearchCO
-    AM         : XxsifyEmpLeaveAM
-    VO         : XxsifyEmpLeaveSearchVO
--->
-<page xmlns:jrad="http://xmlns.oracle.com/jrad"
-      xmlns:oa="http://xmlns.oracle.com/oa"
-      xmlns:ui="http://xmlns.oracle.com/uix/ui"
-      xmlns:user="http://xmlns.oracle.com/jrad/user"
-      xmlns="http://xmlns.oracle.com/jrad"
-      version="10.1.3_"
-      xml:lang="en-US"
-      file-version="$Header$">
-
+<page xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:ui="http://xmlns.oracle.com/uix/ui" version="10.1.3_" xml:lang="en-US" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$">
    <content>
-      <oa:pageLayout id="pageLayoutRN"
-                     controllerClass="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveSearchCO"
-                     amDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM">
-
+      <oa:pageLayout id="pageLayoutRN" controllerClass="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveSearchCO" amDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM">
          <ui:corporateBranding>
             <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
          </ui:corporateBranding>
-
          <ui:contents>
             <oa:header id="MainRN" text="Employee Leave Search">
                <ui:contents>
 
-                  <!-- ============================================================
-                       Search Criteria Region
-                  ============================================================ -->
+                  <!-- Search Criteria Region -->
                   <oa:rowLayout id="SearchRN" hAlign="center">
                      <ui:contents>
                         <oa:defaultSingleColumn id="SingleDefaultRN" headerDisabled="true">
@@ -43,37 +22,22 @@
                                        <ui:contents>
                                           <oa:table name="LeaveTypeLov" id="XxsifyLeaveTypeLovVO">
                                              <ui:contents>
-                                                <oa:messageStyledText id="LeaveTypeSrch"
-                                                                      viewName="XxsifyLeaveTypeLovVO"
-                                                                      viewAttr="LookupCode"
-                                                                      queryable="true"
-                                                                      prompt="Leave Type"/>
+                                                <oa:messageStyledText id="LeaveTypeSrch" viewName="XxsifyLeaveTypeLovVO" viewAttr="LookupCode" queryable="true" prompt="Leave Type"/>
                                              </ui:contents>
                                           </oa:table>
                                        </ui:contents>
                                     </oa:listOfValues>
                                  </lovContents>
                                  <lovMappings>
-                                    <lovMap id="lovMap1"
-                                            lovItem="LeaveTypeSrch"
-                                            resultTo="LeaveType"
-                                            criteriaFrom="LeaveType"/>
+                                    <lovMap id="lovMap1" lovItem="LeaveTypeSrch" resultTo="LeaveType" criteriaFrom="LeaveType"/>
                                  </lovMappings>
                               </oa:messageLovInput>
 
                               <!-- Start Date -->
-                              <oa:messageDateField id="StartDate"
-                                                   prompt="Start Date"
-                                                   viewName="XxsifyEmpLeaveSearchVO"
-                                                   viewAttr="StartDate"
-                                                   required="false"/>
+                              <oa:messageDateField id="StartDate" prompt="Start Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="StartDate" required="false"/>
 
                               <!-- End Date -->
-                              <oa:messageDateField id="EndDate"
-                                                   prompt="End Date"
-                                                   viewName="XxsifyEmpLeaveSearchVO"
-                                                   viewAttr="EndDate"
-                                                   required="false"/>
+                              <oa:messageDateField id="EndDate" prompt="End Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="EndDate" required="false"/>
 
                            </ui:contents>
                         </oa:defaultSingleColumn>
@@ -82,45 +46,28 @@
 
                   <oa:spacer id="spacer1" height="1" width="5"/>
 
-                  <!-- ============================================================
-                       Search / Clear / Create Buttons
-                  ============================================================ -->
+                  <!-- Search / Clear / Create Buttons -->
                   <oa:rowLayout id="ButtonRN" hAlign="center">
                      <ui:contents>
                         <oa:pageButtonBar id="PageButtonBarRN">
                            <ui:contents>
-
-                              <oa:submitButton id="Search"
-                                               text="Search"
-                                               prompt="Search"
-                                               styleClass="OraDataText">
+                              <oa:submitButton id="Search" text="Search" prompt="Search" styleClass="OraDataText">
                                  <ui:primaryClientAction>
                                     <ui:firePartialAction event="Search" id="firePartialSearch"/>
                                  </ui:primaryClientAction>
                               </oa:submitButton>
-
                               <oa:spacer id="spacer2" width="5"/>
-
-                              <oa:submitButton id="Clear"
-                                               text="Clear"
-                                               prompt="Clear"
-                                               styleClass="OraDataText">
+                              <oa:submitButton id="Clear" text="Clear" prompt="Clear" styleClass="OraDataText">
                                  <ui:primaryClientAction>
                                     <ui:firePartialAction event="Clear" id="firePartialClear"/>
                                  </ui:primaryClientAction>
                               </oa:submitButton>
-
                               <oa:spacer id="spacer3" width="5"/>
-
-                              <oa:submitButton id="Create"
-                                               text="Create"
-                                               prompt="Create"
-                                               styleClass="OraDataText">
+                              <oa:submitButton id="Create" text="Create" prompt="Create" styleClass="OraDataText">
                                  <ui:primaryClientAction>
                                     <ui:firePartialAction event="Create" id="firePartialCreate"/>
                                  </ui:primaryClientAction>
                               </oa:submitButton>
-
                            </ui:contents>
                         </oa:pageButtonBar>
                      </ui:contents>
@@ -128,14 +75,8 @@
 
                   <oa:spacer id="spacer4" width="5"/>
 
-                  <!-- ============================================================
-                       Results Table
-                  ============================================================ -->
-                  <oa:advancedTable id="ResultsTableRN"
-                                    viewName="XxsifyEmpLeaveSearchVO"
-                                    width="100%"
-                                    emptyText="No leave records found. Please refine your search."
-                                    colFreezeEnabled="false">
+                  <!-- Results Table -->
+                  <oa:advancedTable id="ResultsTableRN" viewName="XxsifyEmpLeaveSearchVO" width="100%" emptyText="No leave records found. Please refine your search." colFreezeEnabled="false">
                      <ui:contents>
 
                         <oa:column id="LeaveTypeCol">
@@ -143,10 +84,7 @@
                               <oa:sortableHeader id="LeaveTypeHdr" prompt="Leave Type"/>
                            </ui:columnHeader>
                            <ui:contents>
-                              <oa:messageTextInput id="LeaveTypeI"
-                                                   viewAttr="LeaveType"
-                                                   readOnly="true"
-                                                   prompt="Leave Type"/>
+                              <oa:messageTextInput id="LeaveTypeI" viewAttr="LeaveType" readOnly="true" prompt="Leave Type"/>
                            </ui:contents>
                         </oa:column>
 
@@ -155,11 +93,7 @@
                               <oa:sortableHeader id="StartDateHdr" prompt="Start Date"/>
                            </ui:columnHeader>
                            <ui:contents>
-                              <oa:messageTextInput id="StartDateI"
-                                                   viewAttr="StartDate"
-                                                   readOnly="true"
-                                                   prompt="Start Date"
-                                                   dataType="DATE"/>
+                              <oa:messageTextInput id="StartDateI" viewAttr="StartDate" readOnly="true" prompt="Start Date" dataType="DATE"/>
                            </ui:contents>
                         </oa:column>
 
@@ -168,11 +102,7 @@
                               <oa:sortableHeader id="EndDateHdr" prompt="End Date"/>
                            </ui:columnHeader>
                            <ui:contents>
-                              <oa:messageTextInput id="EndDateI"
-                                                   viewAttr="EndDate"
-                                                   readOnly="true"
-                                                   prompt="End Date"
-                                                   dataType="DATE"/>
+                              <oa:messageTextInput id="EndDateI" viewAttr="EndDate" readOnly="true" prompt="End Date" dataType="DATE"/>
                            </ui:contents>
                         </oa:column>
 
@@ -181,11 +111,7 @@
                               <oa:sortableHeader id="NoOfDaysHdr" prompt="No of Days"/>
                            </ui:columnHeader>
                            <ui:contents>
-                              <oa:messageTextInput id="NoOfDaysI"
-                                                   viewAttr="NoOfDays"
-                                                   readOnly="true"
-                                                   prompt="No of Days"
-                                                   dataType="NUMBER"/>
+                              <oa:messageTextInput id="NoOfDaysI" viewAttr="NoOfDays" readOnly="true" prompt="No of Days" dataType="NUMBER"/>
                            </ui:contents>
                         </oa:column>
 
@@ -194,10 +120,7 @@
                               <oa:sortableHeader id="StatusHdr" prompt="Status"/>
                            </ui:columnHeader>
                            <ui:contents>
-                              <oa:messageTextInput id="StatusI"
-                                                   viewAttr="Status"
-                                                   readOnly="true"
-                                                   prompt="Status"/>
+                              <oa:messageTextInput id="StatusI" viewAttr="Status" readOnly="true" prompt="Status"/>
                            </ui:contents>
                         </oa:column>
 
@@ -206,10 +129,7 @@
                               <oa:sortableHeader id="ReasonHdr" prompt="Reason"/>
                            </ui:columnHeader>
                            <ui:contents>
-                              <oa:messageTextInput id="ReasonI"
-                                                   viewAttr="Reason"
-                                                   readOnly="true"
-                                                   prompt="Reason"/>
+                              <oa:messageTextInput id="ReasonI" viewAttr="Reason" readOnly="true" prompt="Reason"/>
                            </ui:contents>
                         </oa:column>
 
@@ -219,14 +139,11 @@
                               <oa:sortableHeader id="UpdateHdr" prompt="Update"/>
                            </ui:columnHeader>
                            <ui:contents>
-                              <oa:image id="UpdateIcon"
-                                        source="updateicon_enabled.gif"
-                                        prompt="Update">
+                              <oa:image id="UpdateIcon" source="updateicon_enabled.gif" prompt="Update">
                                  <ui:primaryClientAction>
                                     <ui:fireAction event="Update" id="fireActionUpdate">
                                        <ui:parameters>
-                                          <ui:parameter key="leaveId"
-                                                        value="${oa.XxsifyEmpLeaveSearchVO.LeaveId}"/>
+                                          <ui:parameter key="leaveId" value="${oa.XxsifyEmpLeaveSearchVO.LeaveId}"/>
                                        </ui:parameters>
                                     </ui:fireAction>
                                  </ui:primaryClientAction>
@@ -240,8 +157,6 @@
                </ui:contents>
             </oa:header>
          </ui:contents>
-
       </oa:pageLayout>
    </content>
-
 </page>

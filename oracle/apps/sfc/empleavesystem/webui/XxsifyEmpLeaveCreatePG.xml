@@ -1,106 +1,47 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<!--
-    Sify Technologies - Employee Leave System
-    Page XML   : XxsifyEmpLeaveCreatePG
-    Controller : XxsifyEmpLeaveCreateCO
-    AM         : XxsifyEmpLeaveAM
-    VO         : XxsifyEmpLeaveCreateVO (Entity-based)
-    EO         : XxsifyEmpLeaveEO
--->
-<page xmlns:jrad="http://xmlns.oracle.com/jrad"
-      xmlns:oa="http://xmlns.oracle.com/oa"
-      xmlns:ui="http://xmlns.oracle.com/uix/ui"
-      xmlns:user="http://xmlns.oracle.com/jrad/user"
-      xmlns="http://xmlns.oracle.com/jrad"
-      version="10.1.3_"
-      xml:lang="en-US"
-      file-version="$Header$">
-
+<page xmlns:jrad="http://xmlns.oracle.com/jrad" xmlns:oa="http://xmlns.oracle.com/oa" xmlns:ui="http://xmlns.oracle.com/uix/ui" version="10.1.3_" xml:lang="en-US" xmlns:user="http://xmlns.oracle.com/jrad/user" xmlns="http://xmlns.oracle.com/jrad" file-version="$Header$">
    <content>
-      <oa:pageLayout id="pageLayoutRN"
-                     controllerClass="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveCreateCO"
-                     amDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM">
-
+      <oa:pageLayout id="pageLayoutRN" controllerClass="oracle.apps.sfc.empleavesystem.webui.XxsifyEmpLeaveCreateCO" amDefName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveAM">
          <ui:corporateBranding>
             <oa:image id="corporateBrandingImage" source="/OA_MEDIA/FNDSSCORP.gif"/>
          </ui:corporateBranding>
-
          <ui:contents>
             <oa:header id="MainRN" text="Employee Leave Request">
                <ui:contents>
 
-                  <!-- ============================================================
-                       Leave Details Form
-                  ============================================================ -->
+                  <!-- Leave Details Form -->
                   <oa:rowLayout id="FormRN" hAlign="center">
                      <ui:contents>
                         <oa:defaultSingleColumn id="SingleDefaultRN" headerDisabled="true">
                            <ui:contents>
 
                               <!-- Employee Number - auto-populated, read only -->
-                              <oa:messageTextInput id="EmployeeNumber"
-                                                   prompt="Employee No"
-                                                   viewName="XxsifyEmpLeaveCreateVO"
-                                                   viewAttr="EmployeeNumber"
-                                                   readOnly="true"/>
+                              <oa:messageTextInput id="EmployeeNumber" prompt="Employee No" viewName="XxsifyEmpLeaveCreateVO" viewAttr="EmployeeNumber" readOnly="true"/>
 
                               <!-- Employee Name - auto-populated, read only -->
-                              <oa:messageTextInput id="EmployeeName"
-                                                   prompt="Employee Name"
-                                                   viewName="XxsifyEmpLeaveCreateVO"
-                                                   viewAttr="EmployeeName"
-                                                   readOnly="true"/>
+                              <oa:messageTextInput id="EmployeeName" prompt="Employee Name" viewName="XxsifyEmpLeaveCreateVO" viewAttr="EmployeeName" readOnly="true"/>
 
                               <!-- Leave Type Picklist -->
-                              <oa:messageChoice id="LeaveType"
-                                                prompt="Leave Type"
-                                                viewName="XxsifyEmpLeaveCreateVO"
-                                                viewAttr="LeaveType"
-                                                required="true"
-                                                pickListViewName="XxsifyLeaveTypePicklistVO"
-                                                pickListDispAttr="Meaning"
-                                                pickListValAttr="LookupCode"/>
+                              <oa:messageChoice id="LeaveType" prompt="Leave Type" viewName="XxsifyEmpLeaveCreateVO" viewAttr="LeaveType" required="true" pickListViewName="XxsifyLeaveTypePicklistVO" pickListDispAttr="Meaning" pickListValAttr="LookupCode"/>
 
                               <!-- Start Date -->
-                              <oa:messageDateField id="StartDate"
-                                                   prompt="Start Date"
-                                                   viewName="XxsifyEmpLeaveCreateVO"
-                                                   viewAttr="StartDate"
-                                                   required="true"/>
+                              <oa:messageDateField id="StartDate" prompt="Start Date" viewName="XxsifyEmpLeaveCreateVO" viewAttr="StartDate" required="true"/>
 
                               <!-- End Date -->
-                              <oa:messageDateField id="EndDate"
-                                                   prompt="End Date"
-                                                   viewName="XxsifyEmpLeaveCreateVO"
-                                                   viewAttr="EndDate"
-                                                   required="true"/>
+                              <oa:messageDateField id="EndDate" prompt="End Date" viewName="XxsifyEmpLeaveCreateVO" viewAttr="EndDate" required="true"/>
 
                               <!-- Calculate Period Button -->
-                              <oa:submitButton id="CalculatePeriod"
-                                               text="Calculate Period"
-                                               prompt="Calculate Period"
-                                               styleClass="OraDataText">
+                              <oa:submitButton id="CalculatePeriod" text="Calculate Period" prompt="Calculate Period" styleClass="OraDataText">
                                  <ui:primaryClientAction>
                                     <ui:firePartialAction event="CalculatePeriod" id="firePartialCalc"/>
                                  </ui:primaryClientAction>
                               </oa:submitButton>
 
                               <!-- No of Leave Days - auto-calculated, read only -->
-                              <oa:messageTextInput id="NoOfDays"
-                                                   prompt="No of Leave Days"
-                                                   viewName="XxsifyEmpLeaveCreateVO"
-                                                   viewAttr="NoOfDays"
-                                                   readOnly="true"
-                                                   dataType="NUMBER"/>
+                              <oa:messageTextInput id="NoOfDays" prompt="No of Leave Days" viewName="XxsifyEmpLeaveCreateVO" viewAttr="NoOfDays" readOnly="true" dataType="NUMBER"/>
 
                               <!-- Reason Text Area -->
-                              <oa:messageTextArea id="Reason"
-                                                  prompt="Reason"
-                                                  viewName="XxsifyEmpLeaveCreateVO"
-                                                  viewAttr="Reason"
-                                                  required="true"
-                                                  rows="4"
-                                                  columns="60"/>
+                              <oa:messageTextArea id="Reason" prompt="Reason" viewName="XxsifyEmpLeaveCreateVO" viewAttr="Reason" required="true" rows="4" columns="60"/>
 
                            </ui:contents>
                         </oa:defaultSingleColumn>
@@ -109,36 +50,22 @@
 
                   <oa:spacer id="spacer1" height="1" width="5"/>
 
-                  <!-- ============================================================
-                       Save / Cancel Buttons
-                  ============================================================ -->
+                  <!-- Save / Cancel Buttons -->
                   <oa:rowLayout id="ButtonRN" hAlign="center">
                      <ui:contents>
                         <oa:pageButtonBar id="PageButtonBarRN">
                            <ui:contents>
-
-                              <oa:submitButton id="Save"
-                                               text="Save"
-                                               prompt="Save"
-                                               styleClass="OraDataText">
+                              <oa:submitButton id="Save" text="Save" prompt="Save" styleClass="OraDataText">
                                  <ui:primaryClientAction>
                                     <ui:firePartialAction event="Save" id="firePartialSave"/>
                                  </ui:primaryClientAction>
                               </oa:submitButton>
-
                               <oa:spacer id="spacer2" width="5"/>
-
-                              <oa:submitButton id="Cancel"
-                                               text="Cancel"
-                                               prompt="Cancel"
-                                               styleClass="OraDataText"
-                                               serverUnvalidated="true"
-                                               unvalidated="true">
+                              <oa:submitButton id="Cancel" text="Cancel" prompt="Cancel" styleClass="OraDataText" serverUnvalidated="true" unvalidated="true">
                                  <ui:primaryClientAction>
                                     <ui:firePartialAction event="Cancel" id="firePartialCancel"/>
                                  </ui:primaryClientAction>
                               </oa:submitButton>
-
                            </ui:contents>
                         </oa:pageButtonBar>
                      </ui:contents>
@@ -147,8 +74,6 @@
                </ui:contents>
             </oa:header>
          </ui:contents>
-
       </oa:pageLayout>
    </content>
-
 </page>
