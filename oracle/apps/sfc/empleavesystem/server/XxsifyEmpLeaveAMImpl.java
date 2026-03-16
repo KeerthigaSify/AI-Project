@@ -32,12 +32,20 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
     // -----------------------------------------------------------------------
     public void initSearchPage(String empId) {
         XxsifyEmpLeaveSearchVOImpl searchVO = getXxsifyEmpLeaveSearchVO();
-        if (empId != null && !empId.trim().equals("")) {
-            searchVO.setNamedWhereClauseParam("p_employee_id", new Number(empId));
-        }
-        searchVO.setWhereClause(null);
-        searchVO.setWhereClauseParams(null);
-        // Do NOT execute query on load — wait for user to press Search
+
+        // Set employee context (mandatory filter)
+        searchVO.setNamedWhereClauseParam("p_employee_id",
+            (empId != null && !empId.trim().isEmpty()) ? new Number(empId) : null);
+
+        // Initialise optional filter params to NULL so the VO has no unbound vars
+        searchVO.setNamedWhereClauseParam("p_leave_type",  null);
+        searchVO.setNamedWhereClauseParam("p_start_date",  null);
+        searchVO.setNamedWhereClauseParam("p_end_date",    null);
+
+        // MUST execute the VO on page load even if the result set is empty.
+        // Without this the advancedTable VO has no current row, causing OAF to
+        // throw "Stale Data" when any button (Create, Search, Clear) is clicked.
+        searchVO.executeQuery();
     }
 
     // -----------------------------------------------------------------------
@@ -171,18 +179,29 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
     }
 
     // -----------------------------------------------------------------------
-    // Private helper – convert "yyyy-MM-dd" String to oracle.jbo.domain.Date
+    // Private helper – convert a date String to oracle.jbo.domain.Date.
+    // Accepts both "dd-MON-yyyy" (OAF default display format, e.g. 15-JAN-2025)
+    // and "yyyy-MM-dd" (ISO format).  Throws a user-friendly error for anything
+    // else so the end user knows exactly what format is expected.
     // -----------------------------------------------------------------------
     private Date toOAFDate(String dateStr) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date parsed = sdf.parse(dateStr);
-            return new Date(new Timestamp(parsed.getTime()));
-        } catch (java.text.ParseException e) {
-            throw new OAException(
-                "Invalid date format '" + dateStr + "'. Expected yyyy-MM-dd.",
-                OAException.ERROR);
+        if (dateStr == null || dateStr.trim().isEmpty()) {
+            return null;
         }
+        String[] formats = { "dd-MMM-yyyy", "yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy" };
+        for (String fmt : formats) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat(fmt);
+                sdf.setLenient(false);
+                java.util.Date parsed = sdf.parse(dateStr.trim());
+                return new Date(new Timestamp(parsed.getTime()));
+            } catch (java.text.ParseException e) {
+                // try next format
+            }
+        }
+        throw new OAException(
+            "Invalid date '" + dateStr + "'. Please enter dates as dd-MON-yyyy (e.g. 15-JAN-2025).",
+            OAException.ERROR);
     }
 
     // -----------------------------------------------------------------------

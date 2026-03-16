@@ -33,11 +33,13 @@
                                  </lovMappings>
                               </oa:messageLovInput>
 
-                              <!-- Start Date -->
-                              <oa:messageTextInput id="StartDate" prompt="Start Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="StartDate" required="false" dataType="DATE" displayWidth="11" maximumLength="11"/>
+                              <!-- Start Date (search filter – optional; dataType intentionally omitted
+                                   to prevent OAF from validating an empty string as a DATE when
+                                   the user leaves this field blank and clicks Create/Search) -->
+                              <oa:messageTextInput id="StartDate" prompt="Start Date (dd-MON-yyyy)" viewName="XxsifyEmpLeaveSearchVO" viewAttr="StartDate" required="false" displayWidth="12" maximumLength="12"/>
 
-                              <!-- End Date -->
-                              <oa:messageTextInput id="EndDate" prompt="End Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="EndDate" required="false" dataType="DATE" displayWidth="11" maximumLength="11"/>
+                              <!-- End Date (same reason as StartDate above) -->
+                              <oa:messageTextInput id="EndDate" prompt="End Date (dd-MON-yyyy)" viewName="XxsifyEmpLeaveSearchVO" viewAttr="EndDate" required="false" displayWidth="12" maximumLength="12"/>
 
                            </ui:contents>
                         </oa:defaultSingleColumn>
@@ -63,7 +65,10 @@
                                  </ui:primaryClientAction>
                               </oa:submitButton>
                               <oa:spacer id="spacer3" width="5"/>
-                              <oa:submitButton id="Create" text="Create" prompt="Create" styleClass="OraDataText">
+                              <!-- serverUnvalidated + unvalidated: skip VO-row validation on click.
+                                   This is a belt-and-suspenders guard against any residual
+                                   Stale Data error if the search VO row is inaccessible. -->
+                              <oa:submitButton id="Create" text="Create" prompt="Create" styleClass="OraDataText" serverUnvalidated="true" unvalidated="true">
                                  <ui:primaryClientAction>
                                     <ui:firePartialAction event="Create" id="firePartialCreate"/>
                                  </ui:primaryClientAction>
