@@ -2,10 +2,14 @@
 -- Sify Technologies – Employee Leave System
 -- Script  : 01_create_table.sql
 -- Object  : xxsify_emp_leave_det_t
+-- Schema  : XXSIFY  (custom schema – run this script as the XXSIFY user)
 -- DB      : Oracle EBS R12 | Host: 1.6.125.128:1542/AIROLI
 -- ============================================================
+-- NOTE: Connect as XXSIFY user before running this script.
+--       e.g.  CONNECT xxsify/<password>@AIROLI
+-- ============================================================
 
-CREATE TABLE xxsify_emp_leave_det_t (
+CREATE TABLE xxsify.xxsify_emp_leave_det_t (
     -- Primary Key
     leave_id                NUMBER          NOT NULL,
 
@@ -52,7 +56,7 @@ CREATE TABLE xxsify_emp_leave_det_t (
     CONSTRAINT xxsify_emp_leave_t_pk PRIMARY KEY (leave_id)
 );
 
-COMMENT ON TABLE  xxsify_emp_leave_det_t               IS 'Sify Employee Leave Details Custom Table';
-COMMENT ON COLUMN xxsify_emp_leave_det_t.leave_id       IS 'Primary Key – populated from xxsify_emp_leave_id_s';
-COMMENT ON COLUMN xxsify_emp_leave_det_t.employee_id    IS 'Oracle HR Employee ID (FND_GLOBAL.EMPLOYEE_ID)';
-COMMENT ON COLUMN xxsify_emp_leave_det_t.status         IS 'Leave Status: PENDING / APPROVED / REJECTED';
+COMMENT ON TABLE  xxsify.xxsify_emp_leave_det_t               IS 'Sify Employee Leave Details Custom Table';
+COMMENT ON COLUMN xxsify.xxsify_emp_leave_det_t.leave_id       IS 'Primary Key – populated from xxsify_emp_leave_id_s';
+COMMENT ON COLUMN xxsify.xxsify_emp_leave_det_t.employee_id    IS 'Oracle HR Employee ID (FND_GLOBAL.EMPLOYEE_ID)';
+COMMENT ON COLUMN xxsify.xxsify_emp_leave_det_t.status         IS 'Leave Status: PENDING / APPROVED / REJECTED';

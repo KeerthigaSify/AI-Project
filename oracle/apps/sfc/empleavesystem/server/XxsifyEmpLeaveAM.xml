@@ -12,22 +12,27 @@
 
   <ViewUsage
     Name="XxsifyEmpLeaveSearchVO"
-    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveSearchVO"/>
+    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveSearchVO"
+    ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveSearchVOImpl"/>
 
   <ViewUsage
     Name="XxsifyEmpLeaveCreateVO"
-    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveCreateVO"/>
+    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveCreateVO"
+    ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveCreateVOImpl"/>
 
   <ViewUsage
     Name="XxsifyEmpLeaveEVO"
-    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVO"/>
+    ViewObjectName="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVO"
+    ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVOImpl"/>
 
   <ViewUsage
     Name="XxsifyLeaveTypeLovVO"
-    ViewObjectName="oracle.apps.sfc.empleavesystem.lov.server.XxsifyLeaveTypeLovVO"/>
+    ViewObjectName="oracle.apps.sfc.empleavesystem.lov.server.XxsifyLeaveTypeLovVO"
+    ComponentClass="oracle.apps.sfc.empleavesystem.lov.server.XxsifyLeaveTypeLovVOImpl"/>
 
   <ViewUsage
     Name="XxsifyLeaveTypePicklistVO"
-    ViewObjectName="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVO"/>
+    ViewObjectName="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVO"
+    ComponentClass="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVOImpl"/>
 
 </AppModule>
