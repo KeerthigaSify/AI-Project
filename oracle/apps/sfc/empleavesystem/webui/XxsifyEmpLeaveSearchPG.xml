@@ -34,10 +34,10 @@
                               </oa:messageLovInput>
 
                               <!-- Start Date -->
-                              <oa:messageDateField id="StartDate" prompt="Start Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="StartDate" required="false"/>
+                              <oa:messageTextInput id="StartDate" prompt="Start Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="StartDate" required="false" dataType="DATE" displayWidth="11" maximumLength="11"/>
 
                               <!-- End Date -->
-                              <oa:messageDateField id="EndDate" prompt="End Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="EndDate" required="false"/>
+                              <oa:messageTextInput id="EndDate" prompt="End Date" viewName="XxsifyEmpLeaveSearchVO" viewAttr="EndDate" required="false" dataType="DATE" displayWidth="11" maximumLength="11"/>
 
                            </ui:contents>
                         </oa:defaultSingleColumn>

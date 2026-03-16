@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<jpr version="10.1.3" id="Project">
+  <!--
+    Sify Technologies – Employee Leave System
+    JDeveloper 10.1.3 Project File
+
+    SETUP INSTRUCTIONS:
+    ==================
+    1. Install Oracle OA Extension for JDeveloper 10.1.3 from:
+         $ORACLE_HOME/jdevhome/jdev/extensions/
+       or download from Oracle MetaLink (Patch 4206181).
+
+    2. Set the following JDeveloper environment variables
+       (Tools > Preferences > Environment):
+         OA_JAVA    = $ORACLE_HOME/jdevhome/jdev/mywork
+         JAVA_TOP   = $COMMON_TOP/java/classes
+         OA_HTML    = $COMMON_TOP/html
+
+    3. The Libraries below reference OA Extension libraries.
+       Verify the paths match your Oracle Applications installation.
+
+    Package root: oracle.apps.sfc.empleavesystem
+  -->
+
+  <hash n="jdev.it">
+    <!-- Source root: the folder that contains the 'oracle' package directory -->
+    <value n="sourceDirectoryURL" v="."/>
+    <!-- Compiled classes output to OA_JAVA so OAF can find them at runtime -->
+    <value n="outputDirectory" v="${OA_JAVA}"/>
+    <value n="javaVersion" v="1.5"/>
+  </hash>
+
+  <!--
+    Libraries required for Oracle Application Framework (OAF) development.
+    These are provided by the OA Extension and your Oracle Applications install.
+    Paths resolve via JDeveloper's library registry (Tools > Manage Libraries).
+  -->
+  <list n="Libraries" type="java.lang.String">
+    <!-- Core OAF runtime: fnd.jar, java.jar, etc. -->
+    <value v="Oracle Applications"/>
+    <!-- JDBC driver -->
+    <value v="Oracle JDBC"/>
+    <!-- Business Components for Java (BC4J / ADF BC) -->
+    <value v="BCTools"/>
+    <!-- Oracle UIX (User Interface XML) rendering layer -->
+    <value v="UIX"/>
+  </list>
+
+  <list n="Source" type="java.net.URL">
+    <!-- Adjust this to point at the parent directory that contains oracle/ -->
+    <value v="."/>
+  </list>
+
+</jpr>

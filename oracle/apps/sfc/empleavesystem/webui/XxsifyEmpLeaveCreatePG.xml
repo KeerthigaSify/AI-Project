@@ -25,10 +25,10 @@
                               <oa:messageChoice id="LeaveType" prompt="Leave Type" viewName="XxsifyEmpLeaveCreateVO" viewAttr="LeaveType" required="true" pickListViewName="XxsifyLeaveTypePicklistVO" pickListDispAttr="Meaning" pickListValAttr="LookupCode"/>
 
                               <!-- Start Date -->
-                              <oa:messageDateField id="StartDate" prompt="Start Date" viewName="XxsifyEmpLeaveCreateVO" viewAttr="StartDate" required="true"/>
+                              <oa:messageTextInput id="StartDate" prompt="Start Date" viewName="XxsifyEmpLeaveCreateVO" viewAttr="StartDate" required="true" dataType="DATE" displayWidth="11" maximumLength="11"/>
 
                               <!-- End Date -->
-                              <oa:messageDateField id="EndDate" prompt="End Date" viewName="XxsifyEmpLeaveCreateVO" viewAttr="EndDate" required="true"/>
+                              <oa:messageTextInput id="EndDate" prompt="End Date" viewName="XxsifyEmpLeaveCreateVO" viewAttr="EndDate" required="true" dataType="DATE" displayWidth="11" maximumLength="11"/>
 
                               <!-- Calculate Period Button -->
                               <oa:submitButton id="CalculatePeriod" text="Calculate Period" prompt="Calculate Period" styleClass="OraDataText">
@@ -41,7 +41,7 @@
                               <oa:messageTextInput id="NoOfDays" prompt="No of Leave Days" viewName="XxsifyEmpLeaveCreateVO" viewAttr="NoOfDays" readOnly="true" dataType="NUMBER"/>
 
                               <!-- Reason Text Area -->
-                              <oa:messageTextArea id="Reason" prompt="Reason" viewName="XxsifyEmpLeaveCreateVO" viewAttr="Reason" required="true" rows="4" columns="60"/>
+                              <oa:messageTextInput id="Reason" prompt="Reason" viewName="XxsifyEmpLeaveCreateVO" viewAttr="Reason" required="true" displayWidth="60" maximumLength="4000"/>
 
                            </ui:contents>
                         </oa:defaultSingleColumn>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<jws version="10.1.3" id="Workspace">
+  <!--
+    Sify Technologies – Employee Leave System
+    JDeveloper 10.1.3 Workspace File
+    Requires: Oracle OA Extension for JDeveloper 10.1.3
+              (matches Oracle Applications R12 / 11.5.10)
+  -->
+  <list n="Project URL List" type="java.lang.String">
+    <value v="XxsifyEmpLeaveSystem.jpr"/>
+  </list>
+</jws>
