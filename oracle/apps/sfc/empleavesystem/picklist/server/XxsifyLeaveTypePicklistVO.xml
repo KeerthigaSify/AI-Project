@@ -2,7 +2,7 @@
 <!--
     Sify Technologies – Employee Leave System
     Picklist View Object : XxsifyLeaveTypePicklistVO
-    Purpose              : Picklist for Leave Type on Creation Page (from FND_LOOKUPS)
+    Purpose              : Picklist for Leave Type on Creation Page (from FND_LOOKUP_VALUES)
 -->
 <ViewObject
   xmlns="http://xmlns.oracle.com/bc4j"
@@ -16,7 +16,7 @@
   <SQLQuery><![CDATA[
 SELECT meaning,
        lookup_code
-FROM   fnd_lookups
+FROM   fnd_lookup_values
 WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
 AND    enabled_flag = 'Y'
 AND    SYSDATE BETWEEN NVL(start_date_active, SYSDATE)
