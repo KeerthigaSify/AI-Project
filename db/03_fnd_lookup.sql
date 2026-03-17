@@ -4,24 +4,22 @@
 -- Lookup  : XXSIFY_LEAVE_TYPE
 -- Purpose : Create FND Lookup Type and Values for Leave Types
 --
--- Fixes applied vs original script:
---   1. Replaced fnd_lookup_types_pkg.insert_row /
---      fnd_lookup_values_pkg.insert_row which required an
---      x_rowid IN OUT param + full WHO columns (causing
---      PLS-00306: wrong number or types of arguments).
---      Direct INSERTs are used instead – the standard Oracle
---      EBS customisation approach.
---   2. Added mandatory WHO columns (created_by, creation_date,
---      last_updated_by, last_update_date, last_update_login)
---      using fnd_global built-ins.
---   3. Added mandatory NLS columns (language, source_lang)
---      required by fnd_lookup_values.
---   4. Made both blocks idempotent via COUNT existence checks
---      so the script can be re-run without duplicate errors.
+-- Fixes applied:
+--   1. fnd_lookup_types does NOT have MEANING or DESCRIPTION
+--      columns (ORA-00904). Those columns belong in the
+--      translation table fnd_lookup_types_tl.
+--      Step 1 now inserts into BOTH fnd_lookup_types (keys)
+--      and fnd_lookup_types_tl (meaning / description / NLS).
+--   2. Mandatory WHO columns populated via fnd_global built-ins.
+--   3. fnd_lookup_values correctly includes LANGUAGE, SOURCE_LANG,
+--      MEANING, and DESCRIPTION (those columns do exist there).
+--   4. Both steps are idempotent – safe to re-run.
 -- ============================================================
 
 -- ------------------------------------------------------------
 -- Step 1: Create Lookup Type
+-- fnd_lookup_types  – stores the key / structural columns
+-- fnd_lookup_types_tl – stores translated MEANING & DESCRIPTION
 -- ------------------------------------------------------------
 DECLARE
     v_count NUMBER;
@@ -33,10 +31,10 @@ BEGIN
     AND    application_id = 0;
 
     IF v_count = 0 THEN
+
+        -- Insert the lookup type key row
         INSERT INTO fnd_lookup_types (
             lookup_type,
-            meaning,
-            description,
             application_id,
             security_group_id,
             view_application_id,
@@ -48,8 +46,6 @@ BEGIN
             last_update_login
         ) VALUES (
             'XXSIFY_LEAVE_TYPE',
-            'Sify Leave Types',
-            'Leave types used in Sify Employee Leave System',
             0,                    -- FND / Application Object Library
             0,
             0,
@@ -60,6 +56,38 @@ BEGIN
             SYSDATE,
             fnd_global.login_id
         );
+
+        -- Insert the translated meaning / description row
+        INSERT INTO fnd_lookup_types_tl (
+            lookup_type,
+            application_id,
+            security_group_id,
+            view_application_id,
+            language,
+            source_lang,
+            meaning,
+            description,
+            created_by,
+            creation_date,
+            last_updated_by,
+            last_update_date,
+            last_update_login
+        ) VALUES (
+            'XXSIFY_LEAVE_TYPE',
+            0,
+            0,
+            0,
+            USERENV('LANG'),
+            USERENV('LANG'),
+            'Sify Leave Types',
+            'Leave types used in Sify Employee Leave System',
+            fnd_global.user_id,
+            SYSDATE,
+            fnd_global.user_id,
+            SYSDATE,
+            fnd_global.login_id
+        );
+
         DBMS_OUTPUT.PUT_LINE('Lookup Type XXSIFY_LEAVE_TYPE created successfully.');
     ELSE
         DBMS_OUTPUT.PUT_LINE('Lookup Type XXSIFY_LEAVE_TYPE already exists - skipped.');
@@ -71,10 +99,10 @@ END;
 
 -- ------------------------------------------------------------
 -- Step 2: Insert Lookup Values
--- A local helper procedure is used to keep each value
--- idempotent and avoid code repetition.
--- fnd_lookup_values requires language + source_lang (NLS).
--- USERENV('LANG') returns the session base language (e.g. US).
+-- fnd_lookup_values is a single table that holds both the key
+-- and translated (MEANING, DESCRIPTION) columns together with
+-- LANGUAGE / SOURCE_LANG – no separate _TL table needed here.
+-- A local helper is used to keep each value idempotent.
 -- ------------------------------------------------------------
 DECLARE
 
