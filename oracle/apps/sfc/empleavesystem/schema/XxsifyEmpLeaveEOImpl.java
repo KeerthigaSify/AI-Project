@@ -92,7 +92,7 @@ public class XxsifyEmpLeaveEOImpl extends OAEntityImpl {
     // -----------------------------------------------------------------------
     private void populateWhoColumnsForInsert() {
         Number userId   = new Number(getOADBTransaction().getUserId());
-        Date   sysdate  = new Date();
+        Date   sysdate  = new Date(new java.sql.Timestamp(System.currentTimeMillis()));
 
         setCreatedBy(userId);
         setCreationDate(sysdate);
@@ -103,7 +103,7 @@ public class XxsifyEmpLeaveEOImpl extends OAEntityImpl {
 
     private void populateWhoColumnsForUpdate() {
         Number userId  = new Number(getOADBTransaction().getUserId());
-        Date   sysdate = new Date();
+        Date   sysdate = new Date(new java.sql.Timestamp(System.currentTimeMillis()));
 
         setLastUpdatedBy(userId);
         setLastUpdateDate(sysdate);
