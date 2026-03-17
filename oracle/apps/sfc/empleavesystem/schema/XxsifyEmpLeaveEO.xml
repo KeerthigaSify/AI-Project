@@ -11,6 +11,7 @@
   DBObjectName="XXSIFY_EMP_LEAVE_DET_T"
   DBObjectType="table"
   AliasName="XxsifyEmpLeave"
+  ComponentClass="oracle.apps.sfc.empleavesystem.schema.XxsifyEmpLeaveEOImpl"
   BindingStyle="Oracle"
   UseGlueCode="false">
 
