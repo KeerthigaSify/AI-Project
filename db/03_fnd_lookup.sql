@@ -104,81 +104,97 @@ END;
 -- LANGUAGE / SOURCE_LANG – no separate _TL table needed here.
 -- A local helper is used to keep each value idempotent.
 -- ------------------------------------------------------------
+-- -----------------------------------------------------------------------
+-- FIX NOTE (blank Meaning/LookupCode in LOV):
+-- A prior run of this script may have inserted rows with a different
+-- NLS LANG value, OR inserted rows where fnd_lookup_values returned
+-- the rows but with null MEANING due to a base/TL join mismatch.
+-- The procedure below uses MERGE so it both INSERTS missing rows AND
+-- UPDATES any existing rows that have a blank/null meaning.
+-- The existence check no longer filters on LANGUAGE so it correctly
+-- finds rows seeded under any NLS session.
+-- -----------------------------------------------------------------------
 DECLARE
 
-    PROCEDURE insert_lv (
+    PROCEDURE upsert_lv (
         p_lookup_code IN VARCHAR2,
         p_meaning     IN VARCHAR2,
         p_description IN VARCHAR2
     ) IS
-        v_count NUMBER;
     BEGIN
-        SELECT COUNT(1)
-        INTO   v_count
-        FROM   fnd_lookup_values
-        WHERE  lookup_type    = 'XXSIFY_LEAVE_TYPE'
-        AND    lookup_code    = p_lookup_code
-        AND    application_id = 0
-        AND    language       = USERENV('LANG');
+        MERGE INTO fnd_lookup_values flv
+        USING (SELECT 'XXSIFY_LEAVE_TYPE'  AS lookup_type,
+                      p_lookup_code        AS lookup_code,
+                      0                    AS application_id,
+                      0                    AS security_group_id
+               FROM   dual) src
+        ON (    flv.lookup_type    = src.lookup_type
+            AND flv.lookup_code    = src.lookup_code
+            AND flv.application_id = src.application_id)
+        WHEN MATCHED THEN
+            -- Repair any rows that already exist but have a blank/null meaning
+            UPDATE SET
+                flv.meaning           = p_meaning,
+                flv.description       = p_description,
+                flv.enabled_flag      = 'Y',
+                flv.last_updated_by   = fnd_global.user_id,
+                flv.last_update_date  = SYSDATE,
+                flv.last_update_login = fnd_global.login_id
+            WHERE (flv.meaning IS NULL OR TRIM(flv.meaning) IS NULL
+                   OR flv.meaning != p_meaning)
+        WHEN NOT MATCHED THEN
+            INSERT (lookup_type,
+                    lookup_code,
+                    meaning,
+                    description,
+                    enabled_flag,
+                    start_date_active,
+                    end_date_active,
+                    application_id,
+                    security_group_id,
+                    view_application_id,
+                    territory_code,
+                    attribute_category,
+                    tag,
+                    created_by,
+                    creation_date,
+                    last_updated_by,
+                    last_update_date,
+                    last_update_login,
+                    source_lang,
+                    language)
+            VALUES ('XXSIFY_LEAVE_TYPE',
+                    p_lookup_code,
+                    p_meaning,
+                    p_description,
+                    'Y',
+                    SYSDATE,
+                    NULL,
+                    0,
+                    0,
+                    0,
+                    NULL,
+                    NULL,
+                    NULL,
+                    fnd_global.user_id,
+                    SYSDATE,
+                    fnd_global.user_id,
+                    SYSDATE,
+                    fnd_global.login_id,
+                    USERENV('LANG'),
+                    USERENV('LANG'));
 
-        IF v_count = 0 THEN
-            INSERT INTO fnd_lookup_values (
-                lookup_type,
-                lookup_code,
-                meaning,
-                description,
-                enabled_flag,
-                start_date_active,
-                end_date_active,
-                application_id,
-                security_group_id,
-                view_application_id,
-                territory_code,
-                attribute_category,
-                tag,
-                created_by,
-                creation_date,
-                last_updated_by,
-                last_update_date,
-                last_update_login,
-                source_lang,
-                language
-            ) VALUES (
-                'XXSIFY_LEAVE_TYPE',
-                p_lookup_code,
-                p_meaning,
-                p_description,
-                'Y',
-                SYSDATE,
-                NULL,
-                0,
-                0,
-                0,
-                NULL,
-                NULL,
-                NULL,
-                fnd_global.user_id,
-                SYSDATE,
-                fnd_global.user_id,
-                SYSDATE,
-                fnd_global.login_id,
-                USERENV('LANG'),
-                USERENV('LANG')
-            );
-            DBMS_OUTPUT.PUT_LINE('  Lookup Value [' || p_lookup_code || '] created.');
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('  Lookup Value [' || p_lookup_code || '] already exists - skipped.');
-        END IF;
-    END insert_lv;
+        DBMS_OUTPUT.PUT_LINE('  Lookup Value [' || p_lookup_code || '] - upserted.');
+    END upsert_lv;
 
 BEGIN
-    DBMS_OUTPUT.PUT_LINE('Inserting lookup values for XXSIFY_LEAVE_TYPE...');
+    DBMS_OUTPUT.PUT_LINE('Upserting lookup values for XXSIFY_LEAVE_TYPE...');
 
-    insert_lv('ANNUAL',    'Annual Leave',    'Annual Privilege Leave');
-    insert_lv('SICK',      'Sick Leave',      'Medical / Sick Leave');
-    insert_lv('CASUAL',    'Casual Leave',    'Casual / Short Notice Leave');
-    insert_lv('MATERNITY', 'Maternity Leave', 'Maternity Leave');
-    insert_lv('PATERNITY', 'Paternity Leave', 'Paternity Leave');
+    upsert_lv('ANNUAL',    'Annual Leave',    'Annual Privilege Leave');
+    upsert_lv('SICK',      'Sick Leave',      'Medical / Sick Leave');
+    upsert_lv('CASUAL',    'Casual Leave',    'Casual / Short Notice Leave');
+    upsert_lv('MATERNITY', 'Maternity Leave', 'Maternity Leave');
+    upsert_lv('PATERNITY', 'Paternity Leave', 'Paternity Leave');
 
     COMMIT;
     DBMS_OUTPUT.PUT_LINE('All lookup values processed successfully.');
