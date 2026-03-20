@@ -1,28 +1,55 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--
-    Sify Technologies – Employee Leave System
-    Picklist View Object : XxsifyLeaveTypePicklistVO
-    Purpose              : Picklist for Leave Type on Creation Page (from FND_LOOKUP_VALUES)
--->
-<ViewObject
-  xmlns="http://xmlns.oracle.com/bc4j"
-  Name="XxsifyLeaveTypePicklistVO"
-  Version="12.1.0.0.0"
-  ComponentClass="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVOImpl"
-  RowClass="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVORowImpl"
-  BindingStyle="OracleName"
-  CustomQuery="true">
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
 
-  <SQLQuery><![CDATA[SELECT meaning     AS MEANING,
+<ViewObject
+   Name="XxsifyLeaveTypePicklistVO"
+   BindingStyle="OracleName"
+   CustomQuery="true"
+   RowClass="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVORowImpl"
+   ComponentClass="oracle.apps.sfc.empleavesystem.picklist.server.XxsifyLeaveTypePicklistVOImpl"
+   UseGlueCode="false" >
+   <SQLQuery><![CDATA[
+SELECT meaning     AS MEANING,
        lookup_code AS LOOKUP_CODE
 FROM   fnd_lookup_values_vl
 WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
 AND    enabled_flag = 'Y'
 AND    SYSDATE BETWEEN NVL(start_date_active, SYSDATE)
                    AND NVL(end_date_active,   SYSDATE)
-ORDER BY meaning]]></SQLQuery>
-
-  <ViewAttribute Name="Meaning"    Type="java.lang.String" ColumnName="MEANING"     SQLType="VARCHAR"/>
-  <ViewAttribute Name="LookupCode" Type="java.lang.String" ColumnName="LOOKUP_CODE" SQLType="VARCHAR"/>
-
+ORDER BY meaning
+   ]]></SQLQuery>
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_isExpertMode" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+      <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess" />
+   </DesignTime>
+   <ViewAttribute
+      Name="Meaning"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="80"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="MEANING"
+      Expression="MEANING"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="80" />
+      </DesignTime>
+   </ViewAttribute>
+   <ViewAttribute
+      Name="LookupCode"
+      IsPersistent="false"
+      IsNotNull="true"
+      Precision="30"
+      Type="java.lang.String"
+      ColumnType="VARCHAR2"
+      AliasName="LOOKUP_CODE"
+      Expression="LOOKUP_CODE"
+      SQLType="VARCHAR" >
+      <DesignTime>
+         <Attr Name="_DisplaySize" Value="30" />
+      </DesignTime>
+   </ViewAttribute>
 </ViewObject>
