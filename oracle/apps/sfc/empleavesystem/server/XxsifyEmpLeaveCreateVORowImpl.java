@@ -7,11 +7,8 @@ package oracle.apps.sfc.empleavesystem.server;
 import oracle.apps.fnd.framework.server.OAViewRowImpl;
 import oracle.jbo.domain.Date;
 import oracle.jbo.domain.Number;
+import oracle.jbo.server.AttributeDefImpl;
 
-/**
- * Row implementation for XxsifyEmpLeaveCreateVO.
- * Provides typed getters and setters for all editable form fields.
- */
 public class XxsifyEmpLeaveCreateVORowImpl extends OAViewRowImpl {
 
     public static final int LEAVEID        = 0;
@@ -24,6 +21,10 @@ public class XxsifyEmpLeaveCreateVORowImpl extends OAViewRowImpl {
     public static final int NOOFDAYS       = 7;
     public static final int REASON         = 8;
     public static final int STATUS         = 9;
+
+    /** Default constructor (do not remove) */
+    public XxsifyEmpLeaveCreateVORowImpl() {
+    }
 
     public Number getLeaveId()           { return (Number) getAttributeInternal(LEAVEID); }
     public void   setLeaveId(Number v)   { setAttributeInternal(LEAVEID, v); }
@@ -54,4 +55,40 @@ public class XxsifyEmpLeaveCreateVORowImpl extends OAViewRowImpl {
 
     public String getStatus()            { return (String) getAttributeInternal(STATUS); }
     public void   setStatus(String v)    { setAttributeInternal(STATUS, v); }
+
+    /** getAttrInvokeAccessor: generated method. Do not modify. */
+    protected Object getAttrInvokeAccessor(int index,
+                                           AttributeDefImpl attrDef) throws Exception {
+        switch (index) {
+        case LEAVEID:        return getLeaveId();
+        case EMPLOYEEID:     return getEmployeeId();
+        case EMPLOYEENUMBER: return getEmployeeNumber();
+        case EMPLOYEENAME:   return getEmployeeName();
+        case LEAVETYPE:      return getLeaveType();
+        case STARTDATE:      return getStartDate();
+        case ENDDATE:        return getEndDate();
+        case NOOFDAYS:       return getNoOfDays();
+        case REASON:         return getReason();
+        case STATUS:         return getStatus();
+        default:             return super.getAttrInvokeAccessor(index, attrDef);
+        }
+    }
+
+    /** setAttrInvokeAccessor: generated method. Do not modify. */
+    protected void setAttrInvokeAccessor(int index, Object value,
+                                         AttributeDefImpl attrDef) throws Exception {
+        switch (index) {
+        case LEAVEID:        setLeaveId((Number) value);        return;
+        case EMPLOYEEID:     setEmployeeId((Number) value);     return;
+        case EMPLOYEENUMBER: setEmployeeNumber((String) value); return;
+        case EMPLOYEENAME:   setEmployeeName((String) value);   return;
+        case LEAVETYPE:      setLeaveType((String) value);      return;
+        case STARTDATE:      setStartDate((Date) value);        return;
+        case ENDDATE:        setEndDate((Date) value);          return;
+        case NOOFDAYS:       setNoOfDays((Number) value);       return;
+        case REASON:         setReason((String) value);         return;
+        case STATUS:         setStatus((String) value);         return;
+        default:             super.setAttrInvokeAccessor(index, value, attrDef); return;
+        }
+    }
 }

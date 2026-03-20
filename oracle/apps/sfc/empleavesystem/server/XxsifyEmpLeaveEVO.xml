@@ -1,34 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--
-    Sify Technologies – Employee Leave System
-    Entity View Object : XxsifyEmpLeaveEVO
-    Purpose : Business component layer VO; auto-handles WHO columns via EO
--->
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+
 <ViewObject
-  xmlns="http://xmlns.oracle.com/bc4j"
-  Name="XxsifyEmpLeaveEVO"
-  Version="12.1.0.0.0"
-  ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVOImpl"
-  RowClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVORowImpl"
-  BindingStyle="OracleName">
+   Name="XxsifyEmpLeaveEVO"
+   BindingStyle="OracleName"
+   RowClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVORowImpl"
+   ComponentClass="oracle.apps.sfc.empleavesystem.server.XxsifyEmpLeaveEVOImpl"
+   UseGlueCode="false" >
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+   </DesignTime>
 
-  <EntityUsage
-    Name="XxsifyEmpLeaveEO"
-    Entity="oracle.apps.sfc.empleavesystem.schema.XxsifyEmpLeaveEO"/>
+   <EntityUsage
+      Name="XxsifyEmpLeaveEO"
+      Entity="oracle.apps.sfc.empleavesystem.schema.XxsifyEmpLeaveEO"/>
 
-  <ViewAttribute Name="LeaveId"        EntityAttrName="LeaveId"        EntityUsage="XxsifyEmpLeaveEO" IsNotNull="true" Type="oracle.jbo.domain.Number"/>
-  <ViewAttribute Name="EmployeeId"     EntityAttrName="EmployeeId"     EntityUsage="XxsifyEmpLeaveEO" IsNotNull="true" Type="oracle.jbo.domain.Number"/>
-  <ViewAttribute Name="EmployeeNumber" EntityAttrName="EmployeeNumber" EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
-  <ViewAttribute Name="EmployeeName"   EntityAttrName="EmployeeName"   EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
-  <ViewAttribute Name="LeaveType"      EntityAttrName="LeaveType"      EntityUsage="XxsifyEmpLeaveEO" IsNotNull="true" Type="java.lang.String"/>
-  <ViewAttribute Name="StartDate"      EntityAttrName="StartDate"      EntityUsage="XxsifyEmpLeaveEO" IsNotNull="true" Type="oracle.jbo.domain.Date"/>
-  <ViewAttribute Name="EndDate"        EntityAttrName="EndDate"        EntityUsage="XxsifyEmpLeaveEO" IsNotNull="true" Type="oracle.jbo.domain.Date"/>
-  <ViewAttribute Name="NoOfDays"       EntityAttrName="NoOfDays"       EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
-  <ViewAttribute Name="Reason"         EntityAttrName="Reason"         EntityUsage="XxsifyEmpLeaveEO" IsNotNull="true" Type="java.lang.String"/>
-  <ViewAttribute Name="Status"         EntityAttrName="Status"         EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
-  <ViewAttribute Name="CreatedBy"      EntityAttrName="CreatedBy"      EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
-  <ViewAttribute Name="CreationDate"   EntityAttrName="CreationDate"   EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
-  <ViewAttribute Name="LastUpdatedBy"  EntityAttrName="LastUpdatedBy"  EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
-  <ViewAttribute Name="LastUpdateDate" EntityAttrName="LastUpdateDate" EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
+   <!-- LeaveId: auto-generated via sequence in EO create(); IsNotNull omitted
+        at VO level to avoid premature OAF validation before sequence fires. -->
+   <ViewAttribute Name="LeaveId"        EntityAttrName="LeaveId"        EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+   <ViewAttribute Name="EmployeeId"     IsNotNull="true" EntityAttrName="EmployeeId"     EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+   <ViewAttribute Name="EmployeeNumber" EntityAttrName="EmployeeNumber" EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+   <ViewAttribute Name="EmployeeName"   EntityAttrName="EmployeeName"   EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+   <ViewAttribute Name="LeaveType"      IsNotNull="true" EntityAttrName="LeaveType"      EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+   <ViewAttribute Name="StartDate"      IsNotNull="true" EntityAttrName="StartDate"      EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
+   <ViewAttribute Name="EndDate"        IsNotNull="true" EntityAttrName="EndDate"        EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
+   <ViewAttribute Name="NoOfDays"       EntityAttrName="NoOfDays"       EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+   <ViewAttribute Name="Reason"         IsNotNull="true" EntityAttrName="Reason"         EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+   <ViewAttribute Name="Status"         EntityAttrName="Status"         EntityUsage="XxsifyEmpLeaveEO" Type="java.lang.String"/>
+   <ViewAttribute Name="CreatedBy"      EntityAttrName="CreatedBy"      EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+   <ViewAttribute Name="CreationDate"   EntityAttrName="CreationDate"   EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
+   <ViewAttribute Name="LastUpdatedBy"  EntityAttrName="LastUpdatedBy"  EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Number"/>
+   <ViewAttribute Name="LastUpdateDate" EntityAttrName="LastUpdateDate" EntityUsage="XxsifyEmpLeaveEO" Type="oracle.jbo.domain.Date"/>
 
 </ViewObject>

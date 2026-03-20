@@ -1,19 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--
-    Sify Technologies – Employee Leave System
-    Entity Object : XxsifyEmpLeaveEO
-    Base Table    : xxsify_emp_leave_det_t
--->
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+
 <Entity
-  xmlns="http://xmlns.oracle.com/bc4j"
   Name="XxsifyEmpLeaveEO"
-  Version="12.1.0.0.0"
   DBObjectName="XXSIFY_EMP_LEAVE_DET_T"
   DBObjectType="table"
   AliasName="XxsifyEmpLeave"
   ComponentClass="oracle.apps.sfc.empleavesystem.schema.XxsifyEmpLeaveEOImpl"
   BindingStyle="Oracle"
   UseGlueCode="false">
+   <DesignTime>
+      <Attr Name="_isCodegen" Value="true" />
+      <Attr Name="_version" Value="10.1.3.43.6" />
+   </DesignTime>
 
   <Attribute
     Name="LeaveId"
