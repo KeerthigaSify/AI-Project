@@ -40,7 +40,15 @@ public class XxsifyEmpLeaveEOImpl extends OAEntityImpl {
     public static final int LASTUPDATEDATE     = 13;
     public static final int LASTUPDATELOGIN    = 14;
 
-    private static final String SEQUENCE_NAME = "xxsify_emp_leave_id_s";
+    // Synonym name accessible from APPS user (see 02_sequence_synonym.sql).
+    // The sequence lives in the XXSIFY schema; APPS user accesses it via
+    // the synonym "xxsify_emp_leave_s" – NOT the raw sequence name.
+    private static final String SEQUENCE_NAME = "xxsify_emp_leave_s";
+
+    /** Default constructor (do not remove) */
+    public XxsifyEmpLeaveEOImpl() {
+        super();
+    }
 
     // -----------------------------------------------------------------------
     // create() – Initialise default values & WHO columns on INSERT
@@ -84,6 +92,56 @@ public class XxsifyEmpLeaveEOImpl extends OAEntityImpl {
                     "End Date cannot be earlier than Start Date.",
                     OAException.ERROR);
             }
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    // getAttrInvokeAccessor: generated method. Do not modify.
+    // -----------------------------------------------------------------------
+    protected Object getAttrInvokeAccessor(int index,
+                                           AttributeDefImpl attrDef) throws Exception {
+        switch (index) {
+        case LEAVEID:         return getLeaveId();
+        case EMPLOYEEID:      return getEmployeeId();
+        case EMPLOYEENUMBER:  return getEmployeeNumber();
+        case EMPLOYEENAME:    return getEmployeeName();
+        case LEAVETYPE:       return getLeaveType();
+        case STARTDATE:       return getStartDate();
+        case ENDDATE:         return getEndDate();
+        case NOOFDAYS:        return getNoOfDays();
+        case REASON:          return getReason();
+        case STATUS:          return getStatus();
+        case CREATEDBY:       return getCreatedBy();
+        case CREATIONDATE:    return getCreationDate();
+        case LASTUPDATEDBY:   return getLastUpdatedBy();
+        case LASTUPDATEDATE:  return getLastUpdateDate();
+        case LASTUPDATELOGIN: return getLastUpdateLogin();
+        default:              return super.getAttrInvokeAccessor(index, attrDef);
+        }
+    }
+
+    // -----------------------------------------------------------------------
+    // setAttrInvokeAccessor: generated method. Do not modify.
+    // -----------------------------------------------------------------------
+    protected void setAttrInvokeAccessor(int index, Object value,
+                                         AttributeDefImpl attrDef) throws Exception {
+        switch (index) {
+        case LEAVEID:         setLeaveId((Number) value);        return;
+        case EMPLOYEEID:      setEmployeeId((Number) value);     return;
+        case EMPLOYEENUMBER:  setEmployeeNumber((String) value); return;
+        case EMPLOYEENAME:    setEmployeeName((String) value);   return;
+        case LEAVETYPE:       setLeaveType((String) value);      return;
+        case STARTDATE:       setStartDate((Date) value);        return;
+        case ENDDATE:         setEndDate((Date) value);          return;
+        case NOOFDAYS:        setNoOfDays((Number) value);       return;
+        case REASON:          setReason((String) value);         return;
+        case STATUS:          setStatus((String) value);         return;
+        case CREATEDBY:       setCreatedBy((Number) value);      return;
+        case CREATIONDATE:    setCreationDate((Date) value);     return;
+        case LASTUPDATEDBY:   setLastUpdatedBy((Number) value);  return;
+        case LASTUPDATEDATE:  setLastUpdateDate((Date) value);   return;
+        case LASTUPDATELOGIN: setLastUpdateLogin((Number) value);return;
+        default:              super.setAttrInvokeAccessor(index, value, attrDef); return;
         }
     }
 
