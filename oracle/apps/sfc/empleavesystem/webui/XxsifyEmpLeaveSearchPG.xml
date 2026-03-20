@@ -16,7 +16,7 @@
                            <ui:contents>
 
                               <!-- Leave Type LOV -->
-                              <oa:messageLovInput id="LeaveType" prompt="Leave Type">
+                              <oa:messageLovInput id="LeaveType" prompt="Leave Type" viewName="XxsifyEmpLeaveSearchVO" viewAttr="LeaveType">
                                  <lovContents>
                                     <oa:listOfValues id="LeaveTypeLov">
                                        <ui:contents>

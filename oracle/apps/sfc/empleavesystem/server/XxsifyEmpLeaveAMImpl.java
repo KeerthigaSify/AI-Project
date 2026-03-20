@@ -46,6 +46,17 @@ public class XxsifyEmpLeaveAMImpl extends OAApplicationModuleImpl {
         // Without this the advancedTable VO has no current row, causing OAF to
         // throw "Stale Data" when any button (Create, Search, Clear) is clicked.
         searchVO.executeQuery();
+
+        // Pre-execute the LOV VO so OAF has an initialised result set ready
+        // when the Leave Type LOV popup opens. Without this explicit call the
+        // LOV VO is in an un-executed state and OAF renders the popup rows
+        // with blank Meaning / LookupCode values even though the SQL is valid.
+        oracle.apps.fnd.framework.server.OAViewObjectImpl lovVO =
+            (oracle.apps.fnd.framework.server.OAViewObjectImpl)
+                findViewObject("XxsifyLeaveTypeLovVO");
+        if (lovVO != null) {
+            lovVO.executeQuery();
+        }
     }
 
     // -----------------------------------------------------------------------

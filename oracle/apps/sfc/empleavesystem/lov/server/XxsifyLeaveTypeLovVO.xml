@@ -13,8 +13,8 @@
   BindingStyle="OracleName"
   CustomQuery="true">
 
-  <SQLQuery><![CDATA[SELECT meaning,
-       lookup_code
+  <SQLQuery><![CDATA[SELECT meaning     AS MEANING,
+       lookup_code AS LOOKUP_CODE
 FROM   fnd_lookup_values_vl
 WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
 AND    enabled_flag = 'Y'
