@@ -105,14 +105,14 @@ END;
 -- A local helper is used to keep each value idempotent.
 -- ------------------------------------------------------------
 -- -----------------------------------------------------------------------
--- FIX NOTE (blank Meaning/LookupCode in LOV):
--- A prior run of this script may have inserted rows with a different
--- NLS LANG value, OR inserted rows where fnd_lookup_values returned
--- the rows but with null MEANING due to a base/TL join mismatch.
--- The procedure below uses MERGE so it both INSERTS missing rows AND
--- UPDATES any existing rows that have a blank/null meaning.
--- The existence check no longer filters on LANGUAGE so it correctly
--- finds rows seeded under any NLS session.
+-- FIX NOTES:
+--   v1: Blank Meaning/LookupCode in LOV – switched to MERGE upsert.
+--   v2: ORA-30926 fix – LANGUAGE is part of fnd_lookup_values PK.
+--       The MERGE ON clause MUST include LANGUAGE; without it Oracle
+--       finds multiple rows for the same lookup_code (one per installed
+--       NLS language) and throws "unable to get a stable set of rows".
+--       We now DELETE stale rows for other languages and
+--       INSERT/UPDATE the row for USERENV('LANG') cleanly.
 -- -----------------------------------------------------------------------
 DECLARE
 
@@ -121,27 +121,37 @@ DECLARE
         p_meaning     IN VARCHAR2,
         p_description IN VARCHAR2
     ) IS
+        v_lang VARCHAR2(4) := USERENV('LANG');
     BEGIN
+        -- Remove any rows seeded under a different language session so
+        -- the MERGE always targets exactly one row (no ORA-30926).
+        DELETE FROM fnd_lookup_values
+        WHERE  lookup_type    = 'XXSIFY_LEAVE_TYPE'
+        AND    lookup_code    = p_lookup_code
+        AND    security_group_id = 0
+        AND    language      != v_lang;
+
+        -- Now MERGE against the single row for the current language.
         MERGE INTO fnd_lookup_values flv
-        USING (SELECT 'XXSIFY_LEAVE_TYPE'  AS lookup_type,
-                      p_lookup_code        AS lookup_code,
-                      0                    AS application_id,
-                      0                    AS security_group_id
+        USING (SELECT 'XXSIFY_LEAVE_TYPE' AS lookup_type,
+                      p_lookup_code       AS lookup_code,
+                      0                   AS security_group_id,
+                      v_lang              AS language
                FROM   dual) src
-        ON (    flv.lookup_type    = src.lookup_type
-            AND flv.lookup_code    = src.lookup_code
-            AND flv.application_id = src.application_id)
+        ON (    flv.lookup_type      = src.lookup_type
+            AND flv.lookup_code      = src.lookup_code
+            AND flv.security_group_id = src.security_group_id
+            AND flv.language         = src.language)
         WHEN MATCHED THEN
-            -- Repair any rows that already exist but have a blank/null meaning
+            -- Always update so meaning is guaranteed to be populated.
             UPDATE SET
                 flv.meaning           = p_meaning,
                 flv.description       = p_description,
                 flv.enabled_flag      = 'Y',
+                flv.source_lang       = v_lang,
                 flv.last_updated_by   = fnd_global.user_id,
                 flv.last_update_date  = SYSDATE,
                 flv.last_update_login = fnd_global.login_id
-            WHERE (flv.meaning IS NULL OR TRIM(flv.meaning) IS NULL
-                   OR flv.meaning != p_meaning)
         WHEN NOT MATCHED THEN
             INSERT (lookup_type,
                     lookup_code,
@@ -181,8 +191,8 @@ DECLARE
                     fnd_global.user_id,
                     SYSDATE,
                     fnd_global.login_id,
-                    USERENV('LANG'),
-                    USERENV('LANG'));
+                    v_lang,
+                    v_lang);
 
         DBMS_OUTPUT.PUT_LINE('  Lookup Value [' || p_lookup_code || '] - upserted.');
     END upsert_lv;

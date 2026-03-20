@@ -11,9 +11,10 @@
    <SQLQuery><![CDATA[
 SELECT meaning     AS MEANING,
        lookup_code AS LOOKUP_CODE
-FROM   fnd_lookup_values_vl
+FROM   fnd_lookup_values
 WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
 AND    enabled_flag = 'Y'
+AND    language     = USERENV('LANG')
 AND    SYSDATE BETWEEN NVL(start_date_active, SYSDATE)
                    AND NVL(end_date_active,   SYSDATE)
 ORDER BY meaning
@@ -31,6 +32,7 @@ ORDER BY meaning
       Precision="80"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
+      ColumnName="MEANING"
       AliasName="MEANING"
       Expression="MEANING"
       SQLType="VARCHAR" >
@@ -45,6 +47,7 @@ ORDER BY meaning
       Precision="30"
       Type="java.lang.String"
       ColumnType="VARCHAR2"
+      ColumnName="LOOKUP_CODE"
       AliasName="LOOKUP_CODE"
       Expression="LOOKUP_CODE"
       SQLType="VARCHAR" >
