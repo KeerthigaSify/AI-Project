@@ -23,9 +23,8 @@
 SELECT meaning,
        lookup_code
 FROM   fnd_lookup_values_vl
-WHERE  lookup_type    = 'XXSIFY_LEAVE_TYPE'
-AND    application_id = 0
-AND    enabled_flag   = 'Y'
+WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
+AND    enabled_flag = 'Y'
 AND    SYSDATE BETWEEN NVL(start_date_active, SYSDATE)
                    AND NVL(end_date_active,   SYSDATE)
 ORDER BY meaning
