@@ -19,6 +19,7 @@ SELECT meaning,
 FROM   fnd_lookup_values
 WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
 AND    enabled_flag = 'Y'
+AND    language     = USERENV('LANG')
 AND    SYSDATE BETWEEN NVL(start_date_active, SYSDATE)
                    AND NVL(end_date_active,   SYSDATE)
 ORDER BY meaning

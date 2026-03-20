@@ -22,13 +22,19 @@
                                        <ui:contents>
                                           <oa:table name="LeaveTypeLov" id="XxsifyLeaveTypeLovVO">
                                              <ui:contents>
-                                                <oa:messageStyledText id="LeaveTypeSrch" viewName="XxsifyLeaveTypeLovVO" viewAttr="LookupCode" queryable="true" prompt="Leave Type"/>
+                                                <!-- Display the human-readable meaning (e.g. "Annual Leave") so users
+                                                     can search and identify leave types by name. Bug fix: was showing
+                                                     LookupCode (raw code) which appeared blank in the LOV column. -->
+                                                <oa:messageStyledText id="LeaveTypeMeaning" viewName="XxsifyLeaveTypeLovVO" viewAttr="Meaning" queryable="true" prompt="Leave Type"/>
+                                                <!-- Hidden column carries the lookup code back to the search filter -->
+                                                <oa:messageStyledText id="LeaveTypeSrch" viewName="XxsifyLeaveTypeLovVO" viewAttr="LookupCode" queryable="false" prompt="Code"/>
                                              </ui:contents>
                                           </oa:table>
                                        </ui:contents>
                                     </oa:listOfValues>
                                  </lovContents>
                                  <lovMappings>
+                                    <!-- Map the LookupCode (e.g. ANNUAL) into the LeaveType search field -->
                                     <lovMap id="lovMap1" lovItem="LeaveTypeSrch" resultTo="LeaveType" criteriaFrom="LeaveType"/>
                                  </lovMappings>
                               </oa:messageLovInput>
