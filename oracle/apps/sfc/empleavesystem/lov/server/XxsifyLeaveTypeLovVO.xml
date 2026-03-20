@@ -13,22 +13,14 @@
   BindingStyle="OracleName"
   CustomQuery="true">
 
-  <SQLQuery><![CDATA[
--- fnd_lookup_values_vl is Oracle EBS's pre-translated Language View (_vl).
--- It already joins the base table with the TL translation table and applies
--- LANGUAGE = USERENV('LANG') internally, so no explicit language filter is
--- needed here.  Using fnd_lookup_values directly caused blank Meaning /
--- LookupCode values when the DB session NLS language differed from the one
--- used during data seeding.
-SELECT meaning,
+  <SQLQuery><![CDATA[SELECT meaning,
        lookup_code
 FROM   fnd_lookup_values_vl
 WHERE  lookup_type  = 'XXSIFY_LEAVE_TYPE'
 AND    enabled_flag = 'Y'
 AND    SYSDATE BETWEEN NVL(start_date_active, SYSDATE)
                    AND NVL(end_date_active,   SYSDATE)
-ORDER BY meaning
-  ]]></SQLQuery>
+ORDER BY meaning]]></SQLQuery>
 
   <ViewAttribute Name="Meaning"    Type="java.lang.String" ColumnName="MEANING"     SQLType="VARCHAR"/>
   <ViewAttribute Name="LookupCode" Type="java.lang.String" ColumnName="LOOKUP_CODE" SQLType="VARCHAR"/>
